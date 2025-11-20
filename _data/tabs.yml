@@ -9,26 +9,30 @@
   url: /resume/
   order: 2
 
+- name: RooRoo
+  url: /projects/rooroo/
+  order: 3
+
 - name: Walnut
   url: /projects/walnut/
-  order: 3
+  order: 4
 
 - name: Seedbot
   url: /projects/seedbot/
-  order: 4
+  order: 5
 
 - name: SolarChapter
   url: /projects/solarchapter/
-  order: 5
+  order: 6
 
 - name: Traffibot
   url: /projects/traffibot/
-  order: 6
+  order: 7
 
 - name: SolarTab
   url: /projects/solartab/
-  order: 7
+  order: 8
 
 - name: EasyMath
   url: /projects/easymath/
-  order: 8 
+  order: 9 
