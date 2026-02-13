@@ -2,7 +2,7 @@
 layout: page
 title: EasyMath ➗
 permalink: /projects/easymath/
-order: 9
+order: 11
 ---
 
 A lil project for learning the basics of Figma I did during my exchange in HKU as a team of 4.
