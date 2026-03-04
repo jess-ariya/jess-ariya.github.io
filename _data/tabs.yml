@@ -9,38 +9,42 @@
   url: /resume/
   order: 2
 
+- name: Orange Tree
+  url: /projects/orangeTree/
+  order: 3
+
 - name: RooRoo
   url: /projects/rooroo/
-  order: 3
+  order: 4
 
 - name: Walnut
   url: /projects/walnut/
-  order: 4
+  order: 5
 
 - name: Seedbot
   url: /projects/seedbot/
-  order: 5
+  order: 6
 
 - name: SolarChapter
   url: /projects/solarchapter/
-  order: 6
+  order: 7
 
 - name: Traffibot
   url: /projects/traffibot/
-  order: 7
+  order: 8
 
 - name: SolarTab
   url: /projects/solartab/
-  order: 10
+  order: 9
 
 - name: EasyMath
   url: /projects/easymath/
-  order: 11
+  order: 10
 
 - name: Silly Projects
   url: /sillyprojects/
-  order: 9
+  order: 11
 
 - name: 3D Prints
   url: /3dprints/
-  order: 8
+  order: 12

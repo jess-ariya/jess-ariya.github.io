@@ -1,8 +1,8 @@
 ---
 layout: page
-title: Pototo the Potato 🥔 (WIP)
+title: Pototo the Potato 🥔 
 permalink: /projects/rooroo/
-order: 3
+order: 5
 ---
 ## Pototo the Potato — Redefining your To-Do List 📝
 
