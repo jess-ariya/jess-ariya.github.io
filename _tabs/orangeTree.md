@@ -61,11 +61,15 @@ As of writing, I am on Day 3 of the project. While there is still plenty of room
 <br>
 
 <div class="project-video">
-  <video controls width="100%" preload="metadata" playsinline style="max-width: 100%; border-radius: 8px;" poster="/assets/img/projects/orangeTree/orangeTree_thumbnail.png">
-    <source src="/assets/img/projects/orangeTree/demovid_1.mp4" type="video/mp4">
-    <source src="/assets/img/projects/orangeTree/demovid_1.mov" type="video/quicktime">
-    <p>Your browser does not support the video tag. <a href="/assets/img/projects/orangeTree/demovid_1.mp4" target="_blank">Download the video (MP4)</a> or <a href="/assets/img/projects/orangeTree/demovid_1.mov" target="_blank">MOV</a> to view it.</p>
-  </video>
+  <iframe 
+    width="100%" 
+    height="400" 
+    src="https://www.youtube.com/embed/fqcWg9bypjI" 
+    title="Orange Tree Demo" 
+    frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    allowfullscreen>
+  </iframe>
 </div>
 
 If you have any thoughts or feedback you’d like to share, I’m more than happy to hear them!
