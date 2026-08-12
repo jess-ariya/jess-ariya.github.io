@@ -37,14 +37,10 @@
   url: /projects/solartab/
   order: 9
 
-- name: EasyMath
-  url: /projects/easymath/
-  order: 10
-
 - name: Silly Projects
   url: /sillyprojects/
-  order: 11
+  order: 10
 
 - name: 3D Prints
   url: /3dprints/
-  order: 12
+  order: 11
