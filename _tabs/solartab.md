@@ -2,7 +2,7 @@
 layout: page
 title: SolarTab 💡
 permalink: /projects/solartab/
-order: 10
+order: 12
 ---
 
 # Powering Digital Learning, Anywhere 🌍
@@ -21,10 +21,10 @@ SolarTab is a rugged, solar-powered tablet designed to help close that gap. Buil
     src="/assets/img/projects/solartab/SolarTab_Slides.pdf" 
     width="100%" 
     height="600px" 
-    style="border: 1px solid #ddd; border-radius: 8px;">
+    class="pdf-embed">
     <p>Your browser does not support PDFs. <a href="/assets/img/projects/solartab/SolarTab_Slides.pdf" target="_blank">Download the PDF</a> to view it.</p>
   </iframe>
-  <div style="margin-top: 16px;">
+  <div class="pdf-embed-actions">
     <a href="/assets/img/projects/solartab/SolarTab_Slides.pdf" class="download-link" target="_blank">
       📄 Download Presentation Slides (PDF)
     </a>

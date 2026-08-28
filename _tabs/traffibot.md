@@ -2,7 +2,7 @@
 layout: page
 title: Traffibot 🚙
 permalink: /projects/traffibot/
-order: 7
+order: 9
 ---
 
 # TraffiBot: ROS & ML Autonomous Traffic Control Robot 🚦
@@ -76,19 +76,20 @@ Here is our step-by-step approach:
 
 4. **Apply perspective transform using homography.**
 
-<div class="image-gallery" style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center;">    <div class="image-item" style="display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 250px; text-align: center;">
-    <img src="/assets/img/projects/traffibot/tb_2.png" alt="Finding the 2 largest blue contours" style="max-height: 180px; object-fit: contain;">
-    <p style="margin-top: 8px;"><em>Fig 2: Finding the 2 largest blue contours</em></p>
+<div class="image-gallery">
+  <div class="image-item image-item--framed">
+    <img src="/assets/img/projects/traffibot/tb_2.png" alt="Finding the 2 largest blue contours" class="project-image--thumb">
+    <p class="image-caption"><em>Fig 2: Finding the 2 largest blue contours</em></p>
   </div>
 
-  <div class="image-item" style="display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 250px; text-align: center;">
-    <img src="/assets/img/projects/traffibot/tb_3.png" alt="Perspective transform" style="max-height: 180px; object-fit: contain;">
-    <p style="margin-top: 8px;"><em>Fig 3: Perspective transform</em></p>
+  <div class="image-item image-item--framed">
+    <img src="/assets/img/projects/traffibot/tb_3.png" alt="Perspective transform" class="project-image--thumb">
+    <p class="image-caption"><em>Fig 3: Perspective transform</em></p>
   </div>
 
-  <div class="image-item" style="display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 250px; text-align: center;">
-    <img src="/assets/img/projects/traffibot/tb_4.png" alt="Masking the license plate" style="max-height: 180px; object-fit: contain;">
-    <p style="margin-top: 8px;"><em>Fig 4: Masking the license plate</em></p>
+  <div class="image-item image-item--framed">
+    <img src="/assets/img/projects/traffibot/tb_4.png" alt="Masking the license plate" class="project-image--thumb">
+    <p class="image-caption"><em>Fig 4: Masking the license plate</em></p>
   </div>
 </div>
 
@@ -137,35 +138,35 @@ The initial plan was to use 36 classes for each letter and number. However, the 
 - Add 8 more classes for each parking number (1-8) resulting a total of 44 classes.
 - Make 2 separate CNN models for reading the license plate and parking position.
 
-<div class="image-gallery">
+<div>
   <!-- Row 1 -->
-  <div class="image-row" style="display: flex; gap: 24px; margin-bottom: 20px;">
-    <div class="image-item" style="flex: 1; text-align: center;">
-      <img src="/assets/img/projects/traffibot/tb_5_1.png" alt="Generated License Plates" style="max-width: 100%; height: auto;">
+  <div class="image-row">
+    <div class="image-item">
+      <img src="/assets/img/projects/traffibot/tb_5_1.png" alt="Generated License Plates" class="project-image">
     </div>
-    <div class="image-item" style="flex: 1; text-align: center;">
-      <img src="/assets/img/projects/traffibot/tb_6_1.png" alt="Actual License Plates" style="max-width: 100%; height: auto;">
+    <div class="image-item">
+      <img src="/assets/img/projects/traffibot/tb_6_1.png" alt="Actual License Plates" class="project-image">
     </div>
   </div>
 
   <!-- Row 2 -->
-  <div class="image-row" style="display: flex; gap: 24px; margin-bottom: 20px;">
-    <div class="image-item" style="flex: 1; text-align: center;">
-      <img src="/assets/img/projects/traffibot/tb_5_2.png" alt="Generated License Plates 2" style="max-width: 100%; height: auto;">
+  <div class="image-row">
+    <div class="image-item">
+      <img src="/assets/img/projects/traffibot/tb_5_2.png" alt="Generated License Plates 2" class="project-image">
     </div>
-    <div class="image-item" style="flex: 1; text-align: center;">
-      <img src="/assets/img/projects/traffibot/tb_6_2.png" alt="Actual License Plates 2" style="max-width: 100%; height: auto;">
+    <div class="image-item">
+      <img src="/assets/img/projects/traffibot/tb_6_2.png" alt="Actual License Plates 2" class="project-image">
     </div>
   </div>
 
   <!-- Row 3 -->
-  <div class="image-row" style="display: flex; gap: 24px; margin-bottom: 20px;">
-    <div class="image-item" style="flex: 1; text-align: center;">
-      <img src="/assets/img/projects/traffibot/tb_5_3.png" alt="After Resizing" style="max-width: 100%; height: auto;">
+  <div class="image-row">
+    <div class="image-item">
+      <img src="/assets/img/projects/traffibot/tb_5_3.png" alt="After Resizing" class="project-image">
       <p><em>Fig 5: Generated License Plates and After Resizing</em></p>
     </div>
-    <div class="image-item" style="flex: 1; text-align: center;">
-      <img src="/assets/img/projects/traffibot/tb_6_3.png" alt="Actual License Plates 3" style="max-width: 100%; height: auto;">
+    <div class="image-item">
+      <img src="/assets/img/projects/traffibot/tb_6_3.png" alt="Actual License Plates 3" class="project-image">
       <p><em>Fig 6: Actual License Plates </em></p>
     </div>
   </div>

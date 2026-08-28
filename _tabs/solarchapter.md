@@ -2,7 +2,7 @@
 layout: page
 title: SolarChapter ☀️
 permalink: /projects/solarchapter/
-order: 6
+order: 8
 ---
 
 
@@ -17,10 +17,10 @@ I was part of the Project Development team where I contributed in leading the de
     src="/assets/img/projects/sc/SC_pdf.pdf" 
     width="100%" 
     height="600px" 
-    style="border: 1px solid #ddd; border-radius: 8px;">
+    class="pdf-embed">
     <p>Your browser does not support PDFs. <a href="/assets/img/projects/sc/SC_pdf.pdf" target="_blank">Download the PDF</a> to view it.</p>
   </iframe>
-  <div style="margin-top: 16px;">
+  <div class="pdf-embed-actions">
     <a href="/assets/img/projects/sc/SC_pdf.pdf" class="download-link" target="_blank">
       📄 Download Full Report (PDF)
     </a>

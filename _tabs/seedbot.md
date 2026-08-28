@@ -2,7 +2,7 @@
 layout: page
 title: SeedBot 🌱
 permalink: /projects/seedbot/
-order: 5
+order: 6
 ---
 
 ## The Problem

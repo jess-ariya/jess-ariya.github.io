@@ -1,8 +1,8 @@
 ---
 layout: page
 title: Pototo the Potato 🥔
-permalink: /projects/rooroo/
-order: 5
+permalink: /projects/pototo/
+order: 7
 ---
 
 ## Pototo the Potato — Redefining your To-Do List 📝
@@ -62,7 +62,7 @@ This journey is in its early stages, but I'm taking a **structured approach** to
 ---
 
 <!-- <div class="project-hero-image">
-  <img src="/assets/img/projects/rooroo/uxdesign_certificate.jpg" alt="UI/UX Design Certificate" class="project-image">
+  <img src="/assets/img/projects/pototo/uxdesign_certificate.jpg" alt="UI/UX Design Certificate" class="project-image">
 </div> -->
 
 ---

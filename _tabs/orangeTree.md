@@ -18,7 +18,7 @@ The initial spark for the project came from a simple idea: **what if I made Jira
 <br>
 
 I started with rough wireframes on paper. They were messy and maybe not entirely legible, but they provided exactly enough momentum to push me forward.
-<div class="project-hero-image" style="text-align: center;">
+<div class="project-hero-image">
   <img src="/assets/img/projects/orangeTree/wireframeSketch.jpg" alt="Quick sketch on paper: a lo-fi wireframe" class="project-image">
   <p><em>Fig 1: Quick sketch on paper of a super lo-fi wireframe</em></p>
 </div>
@@ -30,22 +30,22 @@ The best part of this intuition-led approach was that I kept getting fun, silly 
 
 What better way to achieve that than drawing inspiration from pixel art! I jumped into Figma to design the backgrounds, the trees, and all the cute little UI components to bring that vision to life.
 
-<div class="image-gallery" style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; align-items: flex-start; margin: 20px 0;">
-  <div class="image-item" style="flex: 0 0 auto; text-align: center;">
-    <img src="/assets/img/projects/orangeTree/bg_draft_pixelated.png" alt="Creating pixel art in Figma" class="project-image" style="height: 200px; width: auto; max-width: 100%; object-fit: contain; border-radius: 4px;">
+<div class="image-gallery">
+  <div class="image-item image-item--auto">
+    <img src="/assets/img/projects/orangeTree/bg_draft_pixelated.png" alt="Creating pixel art in Figma" class="project-image project-image--tile">
     <p><em>Fig 2: Creating pixel art in Figma</em></p>
   </div>
-  <div class="image-item" style="flex: 0 0 auto; text-align: center;">
-    <img src="/assets/img/projects/orangeTree/bg_draft.png" alt="Background draft" class="project-image" style="height: 200px; width: auto; max-width: 100%; object-fit: contain; border-radius: 4px;">
+  <div class="image-item image-item--auto">
+    <img src="/assets/img/projects/orangeTree/bg_draft.png" alt="Background draft" class="project-image project-image--tile">
     <p><em>Fig 3: Background draft</em></p>
   </div>
-  <div class="image-item" style="flex: 0 0 auto; text-align: center;">
-    <img src="/assets/img/projects/orangeTree/draft_compelte.png" alt="Draft of component placement in the background" class="project-image" style="height: 200px; width: auto; max-width: 100%; object-fit: contain; border-radius: 4px;">
+  <div class="image-item image-item--auto">
+    <img src="/assets/img/projects/orangeTree/draft_compelte.png" alt="Draft of component placement in the background" class="project-image project-image--tile">
     <p><em>Fig 4: Draft of component placements in the background</em></p>
   </div>
 </div>
 
-<div class="project-hero-image" style="text-align: center;">
+<div class="project-hero-image">
   <img src="/assets/img/projects/orangeTree/component_draft.png" alt="UI components on Figma" class="project-image">
   <p><em>Fig 5: UI components on Figma</em></p>
 </div>
@@ -59,13 +59,13 @@ After letting the idea rest (and marinate in my subconscious for a bit), I revis
 
 First, I hit a **workflow bottleneck**: creating pure pixel art in Figma was becoming **tedious and inefficient**. To fix this, I switched to **Procreate** to make the UI components. I researched how to create a **custom** pixel brush from a YouTube tutorial since there is no official pixel brush offered in the app. While I’m still iterating on the assets to achieve the exact "whimsical and rustic” feel I envisioned, this tooling switch gave me the freedom to redesign the core visual components, including the skies and more dedicated backgrounds.
 
-<div class="project-hero-image" style="text-align: center;">
+<div class="project-hero-image">
   <img src="/assets/img/projects/orangeTree/skies_bgtask.png" alt="Pixel art redesigns on Procreate" class="project-image">
   <p><em>Fig 6: Pixel art redesigns on Procreate</em></p>
 </div>
 
 The app needed a stricter underlying structure so it wouldn't feel disjointed. I standardized the color palette and typography to bring true visual cohesion to the entire experience.
-<div class="project-hero-image" style="text-align: center;">
+<div class="project-hero-image">
   <img src="/assets/img/projects/orangeTree/colors_v2.png" alt="Standardized the colour palette and typography" class="project-image">
   <p><em>Fig 7: Standardized the colour palette and typography</em></p>
 </div>
@@ -73,14 +73,14 @@ The app needed a stricter underlying structure so it wouldn't feel disjointed. I
 Finally, I took this new design system and went back under the hood to overhaul the UI and UX. I focused on removing friction, smoothing out the component transitions, and making the entire user journey feel significantly more intuitive and rewarding.
 
 ### The Main/Home Page
-<div class="project-hero-image" style="text-align: center;">
+<div class="project-hero-image">
   <img src="/assets/img/projects/orangeTree/main_page.png" alt="The main page" class="project-image">
   <p><em>Fig 9: The main page</em></p>
 </div>
 The main page shows the overview of the user’s projects. The projects are represented by orange trees on the left hill. When a project is completed, the tree is transformed into a **dessert** made from the oranges harvested during the process, serving as a visual trophy of their productivity.
 
 ### The Project Page
-<div class="project-hero-image" style="text-align: center;">
+<div class="project-hero-image">
   <img src="/assets/img/projects/orangeTree/project_page.png" alt="The project workspace" class="project-image">
   <p><em>Fig 10: The project workspace</em></p>
 </div>
@@ -93,7 +93,7 @@ The state of the tasks is reflected in the life cycle of the tree:
 The final rewarding part of the “Orange Tree” metaphor is the **Harvest**. 
 
 ### The Task Detail Page
-<div class="project-hero-image" style="text-align: center;">
+<div class="project-hero-image">
   <img src="/assets/img/projects/orangeTree/task_page.png" alt="Task detail page" class="project-image">
   <p><em>Fig 11: Task detail page</em></p>
 </div>

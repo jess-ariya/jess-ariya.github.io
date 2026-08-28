@@ -3,6 +3,30 @@
 /* Import Inter font for better typography */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
+/* Site accent colour. Bootstrap (loaded from CDN in <head>, before this
+   file) defines --bs-primary as its default blue (#0d6efd) and every
+   var(--bs-primary) reference in this stylesheet inherits it. Overriding it
+   once here — rather than hardcoding the new colour at each call site — is
+   the single source of truth: every button, hover state, and heading
+   underline that reads var(--bs-primary) picks it up automatically.
+   --bs-primary-dark backs .download-link's hover state below; Bootstrap
+   doesn't define that one itself, so it's ours to set. */
+:root {
+  --bs-primary: #DAA520;
+  --bs-primary-rgb: 218, 165, 32;
+  --bs-primary-dark: #B8860B;
+}
+
+/* Hide the search bar. Chirpy's topbar.html renders #search-trigger, #search,
+   and #search-cancel unconditionally — there's no site.* config flag that
+   guards them (confirmed by reading the theme source), so hiding them here
+   is the actual mechanism, not a config toggle. */
+#search-trigger,
+#search,
+#search-cancel {
+  display: none !important;
+}
+
 /* Enhanced typography with Inter font */
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -122,7 +146,12 @@ a, button, .btn {
 }
 
 .featured-image {
-  height: 160px;
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 8px;
   margin-bottom: 1rem;
   background-color: var(--bs-gray-200);
@@ -155,7 +184,7 @@ a, button, .btn {
 
 .featured-link {
   align-self: flex-start;
-  font-weight: 500;
+  font-weight: 600;
   text-decoration: none;
   position: relative;
   padding-bottom: 2px;
@@ -204,7 +233,7 @@ h2::after {
   background: var(--bs-primary);
   color: white;
   border-radius: 50px;
-  font-weight: 500;
+  font-weight: 600;
   transition: all 0.3s ease;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   text-decoration: none;
@@ -278,6 +307,14 @@ h2::after {
   transition: all 0.3s ease;
 }
 
+/* .featured-link::after below is a growing-underline effect meant for a
+   bare text link. Every current .featured-link is a pill button (wrapped in
+   .project-links), so that bar renders as a stray line under/against the
+   solid pill background instead of an underline — turn it off here. */
+.project-links .featured-link::after {
+  display: none;
+}
+
 .project-links .featured-link:hover {
   background: var(--bs-primary);
   color: white;
@@ -306,7 +343,7 @@ h2::after {
   text-decoration: none;
   border-radius: 8px;
   transition: all 0.3s ease;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .back-link:hover {
@@ -364,7 +401,7 @@ h2::after {
   color: white;
   text-decoration: none;
   border-radius: 8px;
-  font-weight: 500;
+  font-weight: 600;
   transition: all 0.3s ease;
   margin-top: 1rem;
 }
@@ -375,4 +412,332 @@ h2::after {
   transform: translateY(-2px);
   text-decoration: none;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-} 
+}
+
+/* Kill Chirpy's global link-underline style on our buttons.
+   Chirpy's base CSS has `.content a:not(.img-link)` (see _sass/base/_base.scss
+   and the %link-underline / %link-hover placeholders in
+   _sass/abstracts/_placeholders.scss), which gives *every* link in the page
+   body a `border-bottom` underline at rest, and — since our pages are
+   wrapped in `.content` by Chirpy's page layout — force-applies
+   `color: #d2603a !important` plus a `border-bottom: 1px solid #d2603a` on
+   hover. That's the stray orange "underline" (really a border-bottom cutting
+   across the button) and off-brand text colour on hover.
+
+   Its hover selector's specificity is (0,3,1). Matching that exactly isn't
+   enough: this file is pulled in via a plain Sass `@import 'custom.css'`
+   (an extensionless import gets inlined, but a `.css` one doesn't — Sass
+   leaves it as a native CSS `@import`), and a native `@import` has to sit at
+   the top of the compiled stylesheet to be valid, so it ends up *before*
+   Chirpy's own rules in cascade order, not after. At equal specificity the
+   later rule wins, which was Chirpy's, not ours — confirmed by forcing
+   real `:hover` state via DevTools Protocol and reading the computed style,
+   since a plain screenshot can't trigger `:hover`. So instead of matching,
+   the selectors below deliberately outrank it: repeating the class
+   (`.resume-button.resume-button`) is a standard, harmless way to add one
+   selector's worth of specificity — (0,4,1) beats (0,3,1) regardless of
+   source order, no !important tug-of-war needed. */
+.content a.resume-button.resume-button,
+.content a.featured-link.featured-link,
+.content a.back-link.back-link,
+.content a.download-link.download-link,
+.content a.external-link.external-link {
+  border-bottom: none !important;
+}
+
+.content a.resume-button.resume-button:hover,
+.content a.download-link.download-link:hover,
+.content a.external-link.external-link:hover,
+.content .project-links a.featured-link.featured-link:hover {
+  color: white !important;
+}
+
+.content a.back-link.back-link:hover {
+  color: white !important;
+}
+
+.content a.featured-link.featured-link:hover {
+  color: var(--link-color) !important;
+}
+
+/* Project page image helpers
+   Used across _tabs/*.md to standardize the inline styles that were
+   previously repeated on nearly every image in project write-ups.
+
+   Note: Chirpy's `refactor-content.html` strips any `class` attribute off
+   every rendered <img> at build time and re-applies it to the auto-generated
+   `<a class="popup img-link ...">` lightbox wrapper around it (see the
+   theme's _includes/refactor-content.html). So these classes are written to
+   land on that wrapper, not the <img> itself; variants that need to size the
+   image use a `img` descendant selector. Chirpy's own base stylesheet
+   already gives every <img> `max-width: 100%; height: auto;`. */
+.project-hero-image {
+  text-align: center;
+}
+
+.project-image {
+  display: block;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Homepage featured-project thumbnails: fill the .featured-image box */
+.project-image--cover {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.project-image--cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Fixed-height tile in a gallery, image shrinks to fit without cropping */
+.project-image--tile {
+  border-radius: 4px;
+  box-shadow: none;
+}
+
+.project-image--tile img {
+  height: 200px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* Smaller inline figure, e.g. a step-by-step screenshot sequence */
+.project-image--thumb {
+  display: block;
+  box-shadow: none;
+}
+
+.project-image--thumb img {
+  max-height: 180px;
+  object-fit: contain;
+}
+
+.image-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+/* Responsive grid variant, e.g. photo showcases */
+.image-gallery--grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.image-row {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.image-item {
+  flex: 1;
+  text-align: center;
+}
+
+/* Item sized to its content instead of stretching to fill the row */
+.image-item--auto {
+  flex: 0 0 auto;
+}
+
+/* Item with a caption pinned below a fixed-height image */
+.image-item--framed {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  height: 250px;
+}
+
+.image-caption {
+  margin-top: 8px;
+}
+
+/* PDF embed (resume / project decks) */
+.pdf-embed {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.pdf-embed-actions {
+  margin-top: 16px;
+}
+
+/* Watercolour carousel (Silly Projects page)
+   A horizontally scrollable "scrapbook strip" of painting cards, each at a
+   slight tilt, that straightens and lifts on hover/focus. Two cards (peach,
+   melon) are flip cards: tap/click/Enter reveals the reference photo they
+   were painted from. Flip-card photos use a CSS background-image instead of
+   an <img>, because Chirpy strips the class off every <img> and moves it to
+   an auto-generated `<a class="popup img-link ...">` lightbox wrapper — that
+   wrapper's click-to-zoom would fight with our click-to-flip. Plain cards
+   keep a real <img> so viewers still get that lightbox zoom for free. */
+.watercolor-intro {
+  margin: 1.5rem 0 0.5rem;
+  max-width: 65ch;
+}
+
+.watercolor-carousel {
+  margin: 1.5rem 0 1rem;
+}
+
+.watercolor-track {
+  display: flex;
+  gap: 1.75rem;
+  overflow-x: auto;
+  overflow-y: visible;
+  padding: 1.75rem 0.5rem 2.25rem;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.watercolor-track::-webkit-scrollbar {
+  height: 8px;
+}
+
+.watercolor-track::-webkit-scrollbar-thumb {
+  background: var(--bs-gray-300);
+  border-radius: 8px;
+}
+
+.watercolor-card {
+  flex: 0 0 auto;
+  width: 210px;
+  scroll-snap-align: center;
+  background: var(--card-bg);
+  border-radius: 4px;
+  padding: 12px 12px 18px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.16);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Alternating scrapbook tilt so the strip doesn't feel like a rigid grid */
+.watercolor-card:nth-child(6n + 1) {
+  transform: rotate(-3deg);
+}
+
+.watercolor-card:nth-child(6n + 2) {
+  transform: rotate(2deg);
+}
+
+.watercolor-card:nth-child(6n + 3) {
+  transform: rotate(-1.5deg);
+}
+
+.watercolor-card:nth-child(6n + 4) {
+  transform: rotate(2.5deg);
+}
+
+.watercolor-card:nth-child(6n + 5) {
+  transform: rotate(-2deg);
+}
+
+.watercolor-card:nth-child(6n + 6) {
+  transform: rotate(1.5deg);
+}
+
+.watercolor-card:hover,
+.watercolor-card:focus-visible {
+  transform: rotate(0deg) translateY(-6px) scale(1.04);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.22);
+  z-index: 2;
+}
+
+.watercolor-card--flip {
+  perspective: 1200px;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+}
+
+.watercolor-flip-inner {
+  position: relative;
+  transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+.watercolor-card--flip.is-flipped .watercolor-flip-inner {
+  transform: rotateY(180deg);
+}
+
+.watercolor-flip-face {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  padding: 12px 12px 18px;
+}
+
+.watercolor-flip-back {
+  position: absolute;
+  inset: 0;
+  transform: rotateY(180deg);
+}
+
+.watercolor-photo {
+  width: 100%;
+  height: 220px;
+  border-radius: 2px;
+  background-color: var(--bs-gray-100);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-bottom: 0.75rem;
+}
+
+.watercolor-photo--img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.watercolor-img {
+  display: block;
+  max-width: 100%;
+}
+
+.watercolor-img img {
+  max-width: 100%;
+  max-height: 220px;
+  width: auto;
+  height: auto;
+}
+
+.watercolor-caption {
+  margin: 0;
+  text-align: center;
+  font-size: 0.92rem;
+  color: var(--bs-gray-700);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.watercolor-hint {
+  font-size: 0.72rem;
+  color: var(--bs-gray-500);
+  font-style: italic;
+}
+
+[data-theme="dark"] .watercolor-photo {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="dark"] .watercolor-caption {
+  color: var(--bs-gray-300);
+}
+
+[data-theme="dark"] .watercolor-hint {
+  color: var(--bs-gray-500);
+}

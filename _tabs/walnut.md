@@ -2,7 +2,7 @@
 layout: page
 title: Walnut 🌰
 permalink: /projects/walnut/
-order: 4
+order: 5
 ---
 
 Redifing the note-taking experience for students 📚

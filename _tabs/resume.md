@@ -10,10 +10,10 @@ order: 3
     src="/assets/resume/resume.pdf" 
     width="100%" 
     height="800px" 
-    style="border: 1px solid #ddd; border-radius: 8px;">
+    class="pdf-embed">
     <p>Your browser does not support PDFs. <a href="/assets/resume/resume.pdf" target="_blank">Download the PDF</a> to view it.</p>
   </iframe>
-  <div style="margin-top: 16px;">
+  <div class="pdf-embed-actions">
     <a href="/assets/resume/resume.pdf" class="download-link" target="_blank">
       📄 Download Resume (PDF)
     </a>
