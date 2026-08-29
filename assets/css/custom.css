@@ -142,6 +142,8 @@ a, button, .btn {
   height: 100%;
   object-fit: cover;
   object-position: center;
+  transform: scale(1.5);
+  transform-origin: 50% 45%;
 }
 
 .chat-bubbles {
@@ -194,7 +196,7 @@ a, button, .btn {
   background: #ffeba1;
   border-radius: 4px;
   box-shadow: 0 5px 8px rgba(99, 76, 8, 0.593);
-  transform: rotate(3deg);
+  transform: rotate(-3deg);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
