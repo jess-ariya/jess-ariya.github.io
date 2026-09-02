@@ -24,17 +24,70 @@ Existing productivity tools are designed for neurotypical brains, and they are o
 <br>
 Pototo leverages an interactive and **gamified system** with key features engineered to minimize friction and promote follow-through:
 
-- **Task Deconstruction 🔨:** Easily break down overwhelming projects into manageable, step-by-step **“mini-tasks”** to overcome task initiation difficulty. Users can label their tasks as "Big", "Normal", or "Simple".
+- **Task Deconstruction 🔨:** Easily break down overwhelming projects into manageable, step-by-step **“mini-tasks”** to overcome task initiation difficulty. Users can label their tasks as "Big", "Normal", or "Easy".
 - **Gamified Focus Modes 👾:** Integrated focus timers ⏰ that offer visual progress and incentivized rewards upon completion to sustain attention and boost motivation.
 - **Unified Planning & Focus 📆:** Seamless integration of a comprehensive Calendar View (Week/Month/Year) with a focused Daily To-Do List, eliminating the need to juggle multiple apps. Everyday, users will be shown their daily timeline and it will update their progress as they complete tasks along the day.
-- **Insightful Progress Tracking 📈:** An automated Reports Section providing clear, visual progress metrics (daily, weekly, monthly, annually) to combat time-blindness and reinforce positive habits.
-- **Progress Avatar 🥔:** A personalized **potato avatar** to provide emotional accountability. The growth and health of the user's potato avatar serves as a compassionate visual representation of their "productivity"
+- **Insightful Progress Tracking 📈:** An automated Reports Section providing clear, visual progress metrics (daily, weekly, monthly, annually) to combat time-blindness and reinforce positive habits. (To be implemented)
+- **Progress Avatar 🥔:** A personalized **potato avatar** to provide emotional accountability. The growth and health of the user's potato avatar serves as a compassionate visual representation of their "productivity". (To be implemented)
 
 ## Competitive Advantage
 
 Pototo is built as a _“Cognitive Ally”_ that transforms tedious scheduling into a low-friction, interactive
 journey, rather than an administrative burden. Traditional apps often feel rigid, becoming overwhelming the moment a user falls behind. Our advantage is a **zero-barrier entry** that removes the high **“setup tax”** the ADHD brain cannot pay. We focus on solving for the most extreme friction
 points: time-blindness and task initiation. We are building a tool that fits the user’s natural flow rather than forcing the user to fit the tool’s structure.
+
+## Sneak Peek 👀
+
+<div class="screens-carousel">
+  <button type="button" class="screens-nav screens-nav--prev" aria-label="Scroll screenshots left">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+  </button>
+  <div class="screens-track">
+    <img src="/assets/img/projects/pototo/eg_screens/1_hello.png" alt="Welcome screen" class="screens-item">
+    <img src="/assets/img/projects/pototo/eg_screens/2_onboard1.png" alt="Onboarding screen 1" class="screens-item">
+    <img src="/assets/img/projects/pototo/eg_screens/3_onboard3.png" alt="Onboarding screen 2" class="screens-item">
+    <img src="/assets/img/projects/pototo/eg_screens/4_onboard4.png" alt="Onboarding screen 3" class="screens-item">
+    <img src="/assets/img/projects/pototo/eg_screens/5_onboard_done.png" alt="Onboarding complete" class="screens-item">
+    <img src="/assets/img/projects/pototo/eg_screens/6_daily_habit_picker.png" alt="Daily habit picker" class="screens-item">
+    <img src="/assets/img/projects/pototo/eg_screens/7_other_plans.png" alt="Other plans" class="screens-item">
+    <img src="/assets/img/projects/pototo/eg_screens/8_time_to_potatoes.png" alt="Time to potatoes" class="screens-item">
+    <img src="/assets/img/projects/pototo/eg_screens/9_new_activity.png" alt="New activity" class="screens-item">
+    <img src="/assets/img/projects/pototo/eg_screens/9_list_view.png" alt="List view" class="screens-item">
+    <img src="/assets/img/projects/pototo/eg_screens/10_focus_start.png" alt="Focus mode start" class="screens-item">
+    <img src="/assets/img/projects/pototo/eg_screens/11_focus_end.png" alt="Focus mode end" class="screens-item">
+  </div>
+  <button type="button" class="screens-nav screens-nav--next" aria-label="Scroll screenshots right">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+  </button>
+</div>
+
+<script>
+  document.querySelectorAll('.screens-carousel').forEach(function (carousel) {
+    var track = carousel.querySelector('.screens-track');
+    var prevBtn = carousel.querySelector('.screens-nav--prev');
+    var nextBtn = carousel.querySelector('.screens-nav--next');
+    function scrollByAmount(direction) {
+      track.scrollBy({ left: direction * track.clientWidth * 0.6, behavior: 'smooth' });
+    }
+    prevBtn.addEventListener('click', function () { scrollByAmount(-1); });
+    nextBtn.addEventListener('click', function () { scrollByAmount(1); });
+
+    var edgeBuffer = 48;
+    track.querySelectorAll('.screens-item').forEach(function (item) {
+      item.addEventListener('mouseenter', function () {
+        var trackRect = track.getBoundingClientRect();
+        var itemRect = item.getBoundingClientRect();
+        var overflowLeft = trackRect.left - itemRect.left;
+        var overflowRight = itemRect.right - trackRect.right;
+        if (overflowLeft > 0) {
+          track.scrollBy({ left: -(overflowLeft + edgeBuffer), behavior: 'smooth' });
+        } else if (overflowRight > 0) {
+          track.scrollBy({ left: overflowRight + edgeBuffer, behavior: 'smooth' });
+        }
+      });
+    });
+  });
+</script>
 
 ## Challenges
 

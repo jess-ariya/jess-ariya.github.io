@@ -1049,3 +1049,127 @@ h2::after {
 [data-theme="dark"] .watercolor-hint {
   color: var(--bs-gray-500);
 }
+
+/* Screens carousel (Pototo page)
+   A horizontally scrolling "coverflow": app screenshots sit lightly
+   overlapped and alternately turned in 3D (rotateY, via `perspective` on
+   the track), as if leaning back in a shelf — no card frame around each
+   image, just the photo itself. Hovering/focusing one straightens it
+   flat, pops it forward and brightens it — the rest of the shelf stays
+   put, so only the hovered item reacts. Small round prev/next buttons
+   (matching the site's pill-button look — cream fill, primary-colour
+   hover) scroll the track for people who'd rather click than drag.
+   Plain <img> tags are kept (not background-images) so viewers still get
+   Chirpy's built-in lightbox zoom on click. The `screens-item` class is
+   put on the <img> in markdown, but Chirpy's build strips any class off
+   every <img> at compile time and re-applies it to the auto-generated
+   `<a class="popup img-link ...">` wrapper it inserts around the image —
+   so `.screens-item` below is styling that wrapper anchor (the actual
+   flex/coverflow item), not the <img> itself; the anchor hugs the image
+   tightly (overflow: hidden, no padding/background) so it reads as the
+   photo, not a container around it. */
+.screens-carousel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1.5rem 0 1rem;
+}
+
+.screens-nav {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: #fff4d5;
+  color: var(--bs-gray-700);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.screens-nav svg {
+  width: 14px;
+  height: 14px;
+}
+
+.screens-nav:hover {
+  background: var(--bs-primary);
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+}
+
+.screens-track {
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: visible;
+  perspective: 1200px;
+  padding: 1.75rem 1.5rem 2.5rem;
+  scroll-snap-type: x proximity;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.screens-track::-webkit-scrollbar {
+  height: 8px;
+}
+
+.screens-track::-webkit-scrollbar-thumb {
+  background: var(--bs-gray-300);
+  border-radius: 8px;
+}
+
+.screens-track .screens-item {
+  display: block;
+  overflow: hidden;
+  flex: 0 0 auto;
+  width: 150px;
+  margin-left: 4px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  scroll-snap-align: center;
+  position: relative;
+  filter: brightness(0.94);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1), filter 0.4s ease;
+}
+
+.screens-track .screens-item:first-child {
+  margin-left: 0;
+}
+
+.screens-track .screens-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Alternating 3D lean so the strip reads as a receding shelf, not a flat row */
+.screens-track .screens-item:nth-child(odd) {
+  --screens-tilt: -14deg;
+  transform: rotateY(var(--screens-tilt)) scale(0.96);
+  z-index: 1;
+}
+
+.screens-track .screens-item:nth-child(even) {
+  --screens-tilt: 12deg;
+  transform: rotateY(var(--screens-tilt)) scale(0.96);
+  z-index: 2;
+}
+
+.screens-track .screens-item:hover,
+.screens-track .screens-item:focus-visible {
+  transform: rotateY(0deg) scale(1.20);
+  box-shadow: 0 20px 36px rgba(0, 0, 0, 0.32);
+  filter: brightness(1.04);
+  z-index: 10;
+}
