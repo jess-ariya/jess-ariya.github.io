@@ -3,10 +3,9 @@
 // Stand-in art drawn in code; swap the <svg> inside .vessel for painted PNG layers later.
 const bubbles = [
   "Hey there! I'm Jesslyn",
-  'I love creating &amp; solving problems',
+  'I love building joyful things and solving problems',
   'A generalist with many interests',
   '<strong>Focus: Software Development</strong>',
-  '📍 Vancouver, Canada',
 ];
 ---
 <section class="hero" id="hero" aria-label="Jesslyn rowing a boat on a painted sea">
@@ -26,7 +25,7 @@ const bubbles = [
 
   <div class="hero-copy">
     <h1>Jesslyn Devina</h1>
-    <span class="hand">builder of small, joyful things</span>
+    <span class="hand">come along my journey to build</span>
   </div>
 
   <div class="vessel" data-vessel>
@@ -55,6 +54,21 @@ const bubbles = [
       </g>
     </svg>
   </div>
+  <div class="rock" aria-label="Signpost on a rock: Vancouver, Canada" role="img">
+    <svg viewBox="0 0 200 170" aria-hidden="true">
+      <path d="M96 118 L 98 40" stroke="#6B4A33" stroke-width="5" stroke-linecap="round" />
+      <g transform="rotate(-4 98 46)">
+        <path d="M30 26 L 166 22 L 168 64 L 32 68 Z" fill="#C9A27E" stroke="#2B2A26" stroke-width="1.6" stroke-linejoin="round" filter="url(#wobble)" />
+        <text x="99" y="51" text-anchor="middle" class="sign">Vancouver, Canada</text>
+      </g>
+      <g filter="url(#wc)">
+        <path d="M40 150 Q 46 112 82 104 Q 112 96 138 110 Q 166 124 168 150 Z" fill="#8A8D8F" />
+        <path d="M70 150 Q 78 122 104 116 Q 128 114 140 132 Q 146 142 146 150 Z" fill="#6F7375" opacity=".7" />
+      </g>
+      <path d="M40 150 Q 46 112 82 104 Q 112 96 138 110 Q 166 124 168 150" fill="none" stroke="#2B2A26" stroke-width="1.5" filter="url(#wobble)" />
+      <path d="M24 152 q 20 -6 40 0 M 140 152 q 22 -6 44 0" fill="none" stroke="#F1EFE9" stroke-width="2" stroke-linecap="round" />
+    </svg>
+  </div>
   <p class="cue" aria-hidden="true">scroll to row along <span>→</span></p>
 </section>
 
@@ -80,12 +94,16 @@ const bubbles = [
   .typing span:nth-child(2) { animation-delay: 0.15s; }
   .typing span:nth-child(3) { animation-delay: 0.3s; }
   @keyframes dot { 0%, 60%, 100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-3px); opacity: 1; } }
+  .rock { position: absolute; right: 7%; top: 40%; width: clamp(140px, 16vw, 210px); z-index: 1; pointer-events: none; }
+  .rock svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .sign { font: 19px var(--hand); fill: var(--ink); }
   .cue { position: absolute; right: var(--gutter); bottom: 24px; font: 20px var(--hand); color: var(--walnut); z-index: 3; pointer-events: none; }
   .cue span { display: inline-block; animation: nudge 2.4s ease-in-out infinite; }
   @keyframes nudge { 50% { transform: translateX(6px); } }
   @media (max-width: 560px) {
     .vessel { left: 4%; top: 64%; }
     .bubbles { left: 40%; }
+    .rock { right: 4%; top: 46%; }
   }
   @media (prefers-reduced-motion: reduce) { .bubble { opacity: 1; transform: none; } }
 </style>
