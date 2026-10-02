@@ -58,8 +58,8 @@ const bubbles = [
     <svg viewBox="0 0 200 170" aria-hidden="true">
       <path d="M96 118 L 98 40" stroke="#6B4A33" stroke-width="5" stroke-linecap="round" />
       <g transform="rotate(-4 98 46)">
-        <path d="M30 26 L 166 22 L 168 64 L 32 68 Z" fill="#C9A27E" stroke="#2B2A26" stroke-width="1.6" stroke-linejoin="round" filter="url(#wobble)" />
-        <text x="99" y="51" text-anchor="middle" class="sign">Vancouver, Canada</text>
+        <path d="M18 24 L 178 20 L 180 66 L 20 70 Z" fill="#C9A27E" stroke="#2B2A26" stroke-width="1.6" stroke-linejoin="round" filter="url(#wobble)" />
+        <text x="99" y="51" text-anchor="middle" class="sign" textLength="136" lengthAdjust="spacingAndGlyphs">Vancouver, Canada</text>
       </g>
       <g filter="url(#wc)">
         <path d="M40 150 Q 46 112 82 104 Q 112 96 138 110 Q 166 124 168 150 Z" fill="#8A8D8F" />
@@ -96,7 +96,7 @@ const bubbles = [
   @keyframes dot { 0%, 60%, 100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-3px); opacity: 1; } }
   .rock { position: absolute; right: 7%; top: 40%; width: clamp(140px, 16vw, 210px); z-index: 1; pointer-events: none; }
   .rock svg { width: 100%; height: auto; display: block; overflow: visible; }
-  .sign { font: 19px var(--hand); fill: var(--ink); }
+  .sign { font: 18px var(--hand); fill: var(--ink); }
   .cue { position: absolute; right: var(--gutter); bottom: 24px; font: 20px var(--hand); color: var(--walnut); z-index: 3; pointer-events: none; }
   .cue span { display: inline-block; animation: nudge 2.4s ease-in-out infinite; }
   @keyframes nudge { 50% { transform: translateX(6px); } }
