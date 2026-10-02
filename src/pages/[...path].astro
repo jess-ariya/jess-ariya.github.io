@@ -67,13 +67,16 @@ const slug = d.permalink.split('/').filter(Boolean).pop();
       <Content />
     </article>
 
-    {next && (
-      <a class="next" href={next.href} style={`--n:${next.colour}`}>
-        <span class="hand">next island</span>
-        <b>{next.name} <span aria-hidden="true">→</span></b>
-        <small>{next.blurb}</small>
-      </a>
-    )}
+    <nav class="end" aria-label="More">
+      {next && (
+        <a class="next" href={next.href} style={`--n:${next.colour}`}>
+          <span class="hand">next island</span>
+          <b>{next.name} <span aria-hidden="true">→</span></b>
+          <small>{next.blurb}</small>
+        </a>
+      )}
+      <a class="home-link" href="/"><span aria-hidden="true">←</span> back to the home port</a>
+    </nav>
   </main>
 </Base>
 
@@ -108,8 +111,12 @@ const slug = d.permalink.split('/').filter(Boolean).pop();
   .summary .hand { font-size: 21px; }
   .summary p { font-size: 15px; line-height: 1.5; }
 
+  .end { display: flex; flex-wrap: wrap; align-items: center; gap: 20px 32px; margin-top: 24px; }
+  .home-link { font: 20px var(--hand); color: var(--walnut); text-decoration: none; }
+  .home-link span { display: inline-block; transition: transform 0.3s var(--ease); }
+  .home-link:hover span { transform: translateX(-4px); }
   .next {
-    display: grid; gap: 2px; justify-self: start; text-decoration: none; margin-top: 24px;
+    display: grid; gap: 2px; text-decoration: none;
     padding: 20px 26px; border: 1.5px solid var(--ink); border-radius: 26px 20px 28px 22px;
     background: color-mix(in srgb, var(--n) 22%, var(--paper));
     transition: transform 0.4s var(--ease), background 0.4s;
