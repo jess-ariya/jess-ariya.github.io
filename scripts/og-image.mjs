@@ -27,7 +27,7 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" v
     <g transform="translate(980 590) rotate(-10)"><ellipse rx="16" ry="8"/><path d="M-14 0 L-26 -8 L-24 0 L-26 8 Z"/></g>
   </g>
   <text x="80" y="150" font-family="Georgia, serif" font-size="84" fill="#2B2A26">Jesslyn Devina</text>
-  <text x="84" y="210" font-family="Bradley Hand, Marker Felt, cursive" font-size="36" fill="#6B4A33">come along my journey to build</text>
+  <text x="84" y="210" font-family="Bradley Hand, Marker Felt, cursive" font-size="36" fill="#6B4A33">come along my journey</text>
 </svg>`;
 
 await sharp(Buffer.from(svg)).png().toFile('public/og.png');

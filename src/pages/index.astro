@@ -14,11 +14,13 @@ import PlayGrid from '../components/PlayGrid.astro';
         <span class="hand eyebrow">home port</span>
         <h2>Hello, I build things.</h2>
       </header>
-      <p class="lede">
-        I studied Engineering Physics at UBC and now work as a web developer at 0Footprint in Vancouver.
-        I like creative problem spaces, I learn whatever the project needs, and I'd call myself a generalist
-        with a focus on software.
-      </p>
+      <div class="lede">
+        <p>
+          Hi, I'm Jesslyn. I studied Engineering Physics at UBC and now work as a web developer in Vancouver,
+          building apps and automations for clients. I love solving problems and seeing things click into place.
+        </p>
+        <p>I'm a fast learner and I'm happy to pick up whatever new tech stack a project needs.</p>
+      </div>
     </section>
 
     <section class="stop" id="about">
@@ -66,6 +68,7 @@ import PlayGrid from '../components/PlayGrid.astro';
   .eyebrow { font-size: 20px; }
   h2 { font-size: clamp(32px, 4.5vw, 48px); line-height: 1.05; }
   .lede { font-size: 18px; color: var(--muted); max-width: 60ch; }
+  div.lede { display: grid; gap: 14px; }
 
   .timeline { list-style: none; margin: 0; padding: 0; border-top: 1.5px dashed var(--sea-deep); max-width: 720px; }
   .timeline li {
