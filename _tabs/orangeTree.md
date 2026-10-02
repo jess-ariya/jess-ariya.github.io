@@ -1,34 +1,37 @@
 ---
 layout: page
-title: Orange Tree 🍊
+title: Orange Garden 🍊
 permalink: /projects/orangeTree/
 order: 4
 ---
 
+Orange Garden is a calm task tracker where every project grows into an impressionist tree: tasks bloom as blossoms, turn gold when started and ripen orange when done. It began as a pixel-art side project called Orange Tree, and this is the story of building it twice.
+
+Live at [myorangetree.web.app](https://myorangetree.web.app).
+
+<div class="project-video">
+  <video width="100%" controls muted playsinline loop preload="metadata" poster="/assets/img/projects/orangeTree/v2/01-garden.png">
+    <source src="/assets/img/projects/orangeTree/v2/walkthrough.webm" type="video/webm">
+  </video>
+  <p><em>A 30-second walkthrough of Orange Garden</em></p>
+</div>
+
 ## The Why
-Most productivity or project management apps look a bit boring, generic, and largely the same.
-I wanted to make my own quick task-app that I could use ASAP. I had also just watched an interesting talk by Anthropic’s Design Lead, Jenny Wen, about “not trusting the process” (Youtube link referenced below). 
-<br>
+Most productivity apps look generic and largely the same. I wanted my own task app, one I could use right away and actually enjoy opening.
 
-What process? The **traditional design roadmap**: starting with user research, endless whiteboarding, user interviews, discussions, and boom - you magically create the perfect app. In reality, that path is often… just a supposedly ideal blueprint.
-Fueled by my curiosity to build something without a formal design process, I decided to create something entirely on my drive, intuition, and some fun.
+Around then I watched a talk by Jenny Wen, Anthropic's Design Lead, about [not trusting the process](https://www.youtube.com/watch?v=4u94juYwLLM). The textbook path (research, interviews, endless whiteboarding, then the perfect app) is often just an idealised blueprint. So I set out to build on drive, intuition and fun instead, and see where that led.
 
-## The Process
-The initial spark for the project came from a simple idea: **what if I made Jira a bit more fun?** I love the aesthetic of orange trees, how each bright round fruit adds joy to the luscious green foliage, and how the pretty flowers eventually bloom into vibrant oranges. That became the foundation of my “Orange Tree” project.
-<br>
+## Version 1: Orange Tree
+The spark was simple: **what if Jira were a bit more fun?** I love orange trees, how bright round fruit lights up green foliage and flowers turn into oranges. That life cycle became the metaphor: flowers for tasks not started, green oranges for tasks in progress, ripe oranges for tasks done.
 
-I started with rough wireframes on paper. They were messy and maybe not entirely legible, but they provided exactly enough momentum to push me forward.
+I sketched rough wireframes on paper, messy but enough to get moving. Then I set up Firebase for data and went straight into React, CSS and Vite.
+
 <div class="project-hero-image">
   <img src="/assets/img/projects/orangeTree/wireframeSketch.jpg" alt="Quick sketch on paper: a lo-fi wireframe" class="project-image">
   <p><em>Fig 1: Quick sketch on paper of a super lo-fi wireframe</em></p>
 </div>
 
-From there, I set up a Firebase backend (using Firebase to host the data) and jumped straight into coding the frontend using React, CSS, and Vite for fast tooling. 
-
-## The Idea & Initial Design
-The best part of this intuition-led approach was that I kept getting fun, silly ideas as I built. I knew I wanted the app to have a playful, colorful feel full of whimsy, but I also wanted it to have a rustic, cozy vibe.
-
-What better way to achieve that than drawing inspiration from pixel art! I jumped into Figma to design the backgrounds, the trees, and all the cute little UI components to bring that vision to life.
+I wanted it playful and colourful but also rustic and cozy, so I chose pixel art. I designed backgrounds, trees and UI components in Figma.
 
 <div class="image-gallery">
   <div class="image-item image-item--auto">
@@ -50,78 +53,142 @@ What better way to achieve that than drawing inspiration from pixel art! I jumpe
   <p><em>Fig 5: UI components on Figma</em></p>
 </div>
 
-
-*Spoiler: A lot of improvements have been made since this point.*
-
-## The Progress
-
-After letting the idea rest (and marinate in my subconscious for a bit), I revisited the project with fresh eyes and realized - holy moly, there was a lot of room for improvement.
-
-First, I hit a **workflow bottleneck**: creating pure pixel art in Figma was becoming **tedious and inefficient**. To fix this, I switched to **Procreate** to make the UI components. I researched how to create a **custom** pixel brush from a YouTube tutorial since there is no official pixel brush offered in the app. While I’m still iterating on the assets to achieve the exact "whimsical and rustic” feel I envisioned, this tooling switch gave me the freedom to redesign the core visual components, including the skies and more dedicated backgrounds.
+When pixel art in Figma got tedious, I moved to Procreate with a custom pixel brush built from a YouTube tutorial, and redrew skies and backgrounds. I also standardised a colour palette and type.
 
 <div class="project-hero-image">
   <img src="/assets/img/projects/orangeTree/skies_bgtask.png" alt="Pixel art redesigns on Procreate" class="project-image">
   <p><em>Fig 6: Pixel art redesigns on Procreate</em></p>
 </div>
 
-The app needed a stricter underlying structure so it wouldn't feel disjointed. I standardized the color palette and typography to bring true visual cohesion to the entire experience.
 <div class="project-hero-image">
-  <img src="/assets/img/projects/orangeTree/colors_v2.png" alt="Standardized the colour palette and typography" class="project-image">
-  <p><em>Fig 7: Standardized the colour palette and typography</em></p>
+  <img src="/assets/img/projects/orangeTree/colors_v2.png" alt="v1 colour palette and typography" class="project-image">
+  <p><em>Fig 7: v1 palette and typography</em></p>
 </div>
 
-Finally, I took this new design system and went back under the hood to overhaul the UI and UX. I focused on removing friction, smoothing out the component transitions, and making the entire user journey feel significantly more intuitive and rewarding.
+<div class="image-gallery">
+  <div class="image-item image-item--auto">
+    <img src="/assets/img/projects/orangeTree/main_page.png" alt="v1 main page" class="project-image project-image--tile">
+    <p><em>Fig 8: v1 main page</em></p>
+  </div>
+  <div class="image-item image-item--auto">
+    <img src="/assets/img/projects/orangeTree/project_page.png" alt="v1 project workspace" class="project-image project-image--tile">
+    <p><em>Fig 9: v1 project workspace</em></p>
+  </div>
+  <div class="image-item image-item--auto">
+    <img src="/assets/img/projects/orangeTree/task_page.png" alt="v1 task detail page" class="project-image project-image--tile">
+    <p><em>Fig 10: v1 task detail</em></p>
+  </div>
+</div>
 
-### The Main/Home Page
+## What Wasn't Working
+Coming back with fresh eyes, the charm was there but the tool wasn't. Intuition got me started; it didn't tell me when to stop adding.
+
+* **Hand-drawn assets didn't scale.** Every tree, sky and state was a pixel-art file to draw and maintain, so the visuals and the product moved at different speeds.
+* **Too much on screen.** Placeholder pages (Profile, Settings, People, Collaborators), duration estimates, a 5-level urgency scale and a multi-step create wizard added load without adding use.
+* **Metaphor in the wrong places.** Buttons spoke in garden terms, so you had to decode the UI before using it.
+* **Ideas that didn't earn their place.** "Orange Desserts" for finished projects was fun, but it was a whole asset pipeline for a moment you see rarely.
+* **The code was one tangle.** UI, data and Firebase calls were mixed together, which made each change risky.
+
+So I kept the metaphor and rebuilt almost everything around it.
+
+## The Redesign: Orange Garden
+The rebuild swapped pixel art for Claude Monet: colourful but minimal, calm enough to use every day. This time I wrote every product, design and engineering decision into one plan before building, and treated it as the source of truth.
+
+**Principles.** Keep it simple and low in cognitive load. Plain labels on anything you click ("New project", "Mark done"); the garden metaphor lives only in headings and empty states ("Harvest", "Nothing planted yet").
+
+**Palette.** Calm neutrals from *Water Lilies* and *Garden at Giverny*, plus one strong accent, the orange sun of *Impression, Sunrise*, which doubles as the brand. Colour always means something (status, priority, trees). The one decorative use is a soft painted background of a dozen blurred brushstrokes, capped at 75% opacity so all text stays readable over it.
+
+| Token | Hex | Role |
+|---|---|---|
+| paper | `#F6F1E7` | Page background |
+| ink | `#2A2733` | Text (12.99:1 on paper) |
+| sun | `#E8702A` | Accent, done fruit, focus ring |
+| blossom | `#E9B3C6` | To-do blossom |
+| gold | `#E8B84A` | In-progress fruit |
+| poppy | `#B23A2B` | Danger |
+
+Every contrast ratio is computed, not eyeballed, and pastels never appear as text: each has a darker `-ink` partner.
+
+**Type.** Fraunces with its "soft" axis for headings and project names; Inter for everything else; a 5-step scale from 14 to 40px.
+
 <div class="project-hero-image">
-  <img src="/assets/img/projects/orangeTree/main_page.png" alt="The main page" class="project-image">
-  <p><em>Fig 9: The main page</em></p>
+  <img src="/assets/img/projects/orangeTree/v2/04-styleguide.png" alt="Style guide showing every colour token and UI component" class="project-image">
+  <p><em>Fig 11: The Monet palette, type and component kit</em></p>
 </div>
-The main page shows the overview of the user’s projects. The projects are represented by orange trees on the left hill. When a project is completed, the tree is transformed into a **dessert** made from the oranges harvested during the process, serving as a visual trophy of their productivity.
 
-### The Project Page
+**Generative trees.** Instead of drawing every tree, the code paints them. Each tree is SVG built from overlapping brush dabs, seeded from the project's id so it is unique and stays the same as it grows. Light falls from the top-left. One mark per task: a pink five-petal blossom, then golden fruit, then orange fruit. The canopy grows in three steps with task count, and an empty project is a bare sapling.
+
+## The App Today
+Three screens, one metaphor: a task is a blossom (to do), golden fruit (in progress) or a ripe orange (done). When every fruit is ripe, you harvest the project.
+
+### The Garden (Home)
 <div class="project-hero-image">
-  <img src="/assets/img/projects/orangeTree/project_page.png" alt="The project workspace" class="project-image">
-  <p><em>Fig 10: The project workspace</em></p>
+  <img src="/assets/img/projects/orangeTree/v2/01-garden-full.png" alt="The garden: Up next, a tree per project, and the Harvest shelf" class="project-image">
+  <p><em>Fig 12: The garden, from Up next down to Harvest</em></p>
 </div>
 
-The user manages all the tasks in each project here.
-The state of the tasks is reflected in the life cycle of the tree: 
-* **Flowers**: Symbolize tasks that have not been started
-* **Unripe Green Oranges**: Represents tasks currently in progress
-* **Ripe Oranges**: Signal completed tasks
-The final rewarding part of the “Orange Tree” metaphor is the **Harvest**. 
+Each active project is a tree, nearest due date first. Above them, **Up next** gathers up to five tasks across all projects (in progress, overdue, due within 3 days, high priority), and you can tick them off right there. Harvested projects rest in a collapsed **Harvest** shelf as fully ripe trees, replacing v1's desserts.
 
-### The Task Detail Page
+### A Project
 <div class="project-hero-image">
-  <img src="/assets/img/projects/orangeTree/task_page.png" alt="Task detail page" class="project-image">
-  <p><em>Fig 11: Task detail page</em></p>
-</div>
-To prevent overwhelm, each task can be further broken down into mini-tasks. For example, a "Grocery Shopping" task can be atomized into an ingredient list, or a large "Exam Prep" task can be divided into specific study topics.
-
-
-<br>
-
-<div class="project-video">
-  <iframe 
-    width="100%" 
-    height="400" 
-    src="https://www.youtube.com/embed/9ZMCWZzw4Eg?rel=0" 
-    title="Orange Tree Demo" 
-    frameborder="0" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-    allowfullscreen
-    loading="lazy"
-    referrerpolicy="strict-origin-when-cross-origin">
-  </iframe>
+  <img src="/assets/img/projects/orangeTree/v2/02-project.png" alt="Portfolio site project with its task list and tree" class="project-image">
+  <p><em>Fig 13: A project, with its list and its tree</em></p>
 </div>
 
-If you have any thoughts or feedback you’d like to share, I’m more than happy to hear them!
+One list grouped In progress, To do, Done, sorted automatically by priority then due date, so there is no drag-and-drop to manage. The list and the tree are linked: hover a task and its blossom glows; click a fruit and its task opens. When the last task is done, the app asks: "All ripe — harvest this project?"
+
+### A Task
+<div class="project-hero-image">
+  <img src="/assets/img/projects/orangeTree/v2/03-task-panel.png" alt="Task panel with its checklist" class="project-image">
+  <p><em>Fig 14: The task panel and its checklist</em></p>
+</div>
+
+The task opens as a side panel (full screen on mobile) with title, status, priority, due date, notes and a checklist, the successor to v1's mini-tasks. Everything autosaves. Ticking the first checklist item starts the task; ticking the last offers to finish it. The one reward moment: the fruit swells and ripens when a task is done.
+
+<div class="image-gallery">
+  <div class="image-item image-item--auto">
+    <img src="/assets/img/projects/orangeTree/v2/05-mobile-garden.png" alt="The garden on a phone" class="project-image project-image--tile">
+    <p><em>Fig 15: Garden on mobile</em></p>
+  </div>
+  <div class="image-item image-item--auto">
+    <img src="/assets/img/projects/orangeTree/v2/06-mobile-project.png" alt="A project on a phone" class="project-image project-image--tile">
+    <p><em>Fig 16: Project on mobile</em></p>
+  </div>
+  <div class="image-item image-item--auto">
+    <img src="/assets/img/projects/orangeTree/v2/07-mobile-task.png" alt="A task on a phone" class="project-image project-image--tile">
+    <p><em>Fig 17: Task on mobile</em></p>
+  </div>
+</div>
+
+**Small things that matter:** Undo on deletes and completions; keyboard shortcuts (N, ↑ ↓, X, ?); works offline and syncs later; try it as a guest and upgrade to Google sign-in without losing anything; installable to your home screen.
+
+## Under the Hood
+The code is split into four layers, and lint fails the build if one reaches upward:
+
+1. **domain** — pure TypeScript rules: ordering, dates, Up next, tree geometry. No React, no Firebase.
+2. **data** — the only code that knows about storage: one interface, two adapters (Firestore + Auth, or an in-browser store for demos and tests).
+3. **features** — the UI: garden, project, task, tree, account, plus a small component kit.
+4. **app** — routes, layout, providers.
+
+Writes are local-first, so the UI never waits on the network. Accessibility is a baseline, not a pass at the end: WCAG 2.1 AA contrast, status never shown by colour alone, a spoken summary for every tree ("Portfolio: 3 done, 2 in progress, 4 to do"), 44px touch targets and reduced-motion support. Unit, end-to-end flow and security-rule tests run in CI, and it is hosted on Firebase's free plan.
+
+**Stack:** React 19, TypeScript, Vite, React Router, Tailwind CSS v4 (locked to the Monet tokens), Radix, Firebase, Vitest.
+
+## Reflections
+Not trusting the process got the project started; it was the right call for v1. But the second time, a little process (one written plan, a locked set of tokens) is what made it feel finished. Intuition chose the metaphor; constraints made it usable.
+
+* **Cut more than you add.** Removing the wizard, placeholder pages and desserts did more for the app than any new feature.
+* **Let the metaphor decorate, not label.** Plain buttons, garden headings.
+* **Generate, don't hand-draw, what grows.** Code-painted trees scale to any project; pixel art couldn't.
+
+**Next:** a dusky *Impression, Sunrise* dark theme, which the tokens are already structured for.
+
+If you have any thoughts or feedback you'd like to share, I'm more than happy to hear them!
 
 ---
 
 ### References:
-[Don’t Trust the Process - Jenny Wen, Anthropic Design Lead](https://www.youtube.com/watch?v=4u94juYwLLM)
+[Don't Trust the Process - Jenny Wen, Anthropic Design Lead](https://www.youtube.com/watch?v=4u94juYwLLM)
 
 ---
 
