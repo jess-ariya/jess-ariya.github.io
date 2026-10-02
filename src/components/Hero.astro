@@ -3,8 +3,8 @@
 // Stand-in art drawn in code; swap the <svg> inside .vessel for painted PNG layers later.
 const bubbles = [
   "Hey there! I'm Jesslyn",
-  'I love creating, learning, &amp; solving problems',
-  'I consider myself more of a generalist, where I have a broad range of interests',
+  'I love creating &amp; solving problems',
+  'A generalist with many interests',
   '<strong>Focus: Software Development</strong>',
   '📍 Vancouver, Canada',
 ];
@@ -32,6 +32,7 @@ const bubbles = [
   <div class="vessel" data-vessel>
     <div class="bubbles" aria-live="polite">
       {bubbles.map((text) => <p class="bubble" set:html={text} />)}
+      <p class="bubble typing" hidden aria-hidden="true"><span></span><span></span><span></span></p>
     </div>
     <svg viewBox="0 0 260 170" aria-hidden="true">
       <g data-oar="back" style="transform-origin:150px 96px">
@@ -73,6 +74,12 @@ const bubbles = [
   }
   .bubble:global(.on) { animation: pop 0.45s var(--ease) forwards; }
   @keyframes pop { to { opacity: 1; transform: none; } }
+  .typing { display: flex; gap: 4px; padding: 11px 14px; }
+  .typing[hidden] { display: none; }
+  .typing span { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); animation: dot 1s ease-in-out infinite; }
+  .typing span:nth-child(2) { animation-delay: 0.15s; }
+  .typing span:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes dot { 0%, 60%, 100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-3px); opacity: 1; } }
   .cue { position: absolute; right: var(--gutter); bottom: 24px; font: 20px var(--hand); color: var(--walnut); z-index: 3; pointer-events: none; }
   .cue span { display: inline-block; animation: nudge 2.4s ease-in-out infinite; }
   @keyframes nudge { 50% { transform: translateX(6px); } }
@@ -102,7 +109,27 @@ const bubbles = [
   };
 
   // Chat bubbles pop up one after another from the rower.
-  hero.querySelectorAll('.bubble').forEach((b, i) => setTimeout(() => b.classList.add('on'), reduce ? 0 : 600 + i * 750));
+  // Like a chat: typing dots, then the message, one at a time.
+  const messages = [...hero.querySelectorAll<HTMLElement>('.bubble:not(.typing)')];
+  const typing = hero.querySelector<HTMLElement>('.bubble.typing')!;
+  if (reduce) messages.forEach((m) => m.classList.add('on'));
+  else {
+    messages.forEach((m) => (m.hidden = true));
+    const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
+    (async () => {
+      await wait(500);
+      for (const m of messages) {
+        m.before(typing);
+        typing.hidden = false;
+        typing.classList.add('on');
+        await wait(650);
+        typing.hidden = true;
+        m.hidden = false;
+        m.classList.add('on');
+        await wait(350);
+      }
+    })();
+  }
 
   // Three fish swimming lazy figure-eights; a click on the water scatters them.
   const fish = ([[380, 520, 90, 26, 0.5], [760, 470, 120, 30, -0.4], [980, 600, 80, 20, 0.65]] as const).map(([cx, cy, rx, ry, speed], i) => {
