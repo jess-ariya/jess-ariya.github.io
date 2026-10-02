@@ -1,6 +1,15 @@
 ---
 title: SeedBot 🌱
 permalink: /projects/seedbot/
+tagline: "An automated seed-scanning test bench, built with Insporos."
+colour: "#7E9C57"
+cover: "seedbot.png"
+role: "Seed detection and laser height sensing"
+stack: "Python, OpenCV, Zaber gantry"
+when: "Sep 2023 – Apr 2024"
+problem: "About half of greenhouse seeds never bear fruit, and sorting them is slow or destructive."
+process: "A gantry that moves the sensors over stationary seeds, so each seed is only moved once."
+outcome: "A working bench that finds, scans, measures and plates seeds, meeting all four requirements."
 ---
 
 ## The Problem

@@ -1,9 +1,12 @@
 ---
 title: SolarTab 💡
 permalink: /projects/solartab/
+tagline: "A rugged, solar-powered tablet concept for rural classrooms."
+colour: "#C9A24A"
+when: "Innovent 2023, built in 2 days"
 ---
 
-# Powering Digital Learning, Anywhere 🌍
+# Powering Digital Learning, Anywhere
 
 Hardware Concept | Designed for Rural Education | Solar-Powered & Low-Cost
 
@@ -30,7 +33,7 @@ SolarTab is a rugged, solar-powered tablet designed to help close that gap. Buil
 </div>
 
 
-## 💡 Key Features
+## Key Features
 
 - **🔋 Solar-powered charging**: Foldable panels double surface area for faster, off-grid charging
 - **📖 Paper-like display**: Low-power, eye-friendly screen for long reading sessions
@@ -42,7 +45,7 @@ SolarTab is a rugged, solar-powered tablet designed to help close that gap. Buil
 
 ---
 
-## 🎯 Designed For Impact
+## Designed For Impact
 
 SolarTab was built with a single goal in mind: to bring quality digital education to underserved students in rural regions.
 

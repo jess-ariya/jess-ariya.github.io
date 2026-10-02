@@ -1,9 +1,16 @@
 ---
 title: Traffibot 🚙
 permalink: /projects/traffibot/
+tagline: "An autonomous ROS robot that drives and reads licence plates."
+colour: "#9DB3B5"
+cover: "traffibot.png"
+role: "With Eldad Zipori, UBC ENPH 353"
+stack: "ROS, Python, OpenCV, CNN"
+problem: "Drive a simulated course on its own, stop for pedestrians and read every parked car's plate."
+process: "A flag-driven state machine with PID line following, plus a CNN for plate characters."
+outcome: "A robot that completes the course, waits at crosswalks and reads the plates it passes."
 ---
 
-# TraffiBot: ROS & ML Autonomous Traffic Control Robot 🚦
 
 *By: Jesslyn Devina and Eldad Zipori*
 
@@ -22,7 +29,7 @@ In this paper, we will explain our methods. Our approach can be separated into 2
 
 ---
 
-## Drive 🚗
+## Drive
 
 For the driving mechanism of the car we have decided to apply a finite state machine that will relay on computer vision data obtained from the image feed at the front of the car. The initialization of the state machine was done very loosely for the sake of time and due to lake of proper advance preparation. The state finite state machine and the determination of the action to take was done with various Boolean flags (Figure 1) and if-else statement.
 
@@ -53,7 +60,7 @@ Finally, after the second pedestrian crossing, the algorithm goes into the **SFU
 
 ---
 
-## License Plate Recognition 🔍
+## License Plate Recognition
 
 As the robot traverses around the environment, there are several cars parked along the way. There are several methods to identify the individual license plates of the car. Our final approach is a blend of image processing (masking, morphing), contours and perspective transform.
 
@@ -104,7 +111,7 @@ Here is our step-by-step approach:
    - Do the same procedure as reading the license plate but use the top half instead of the bottom half of the image and find the 2 largest contours instead of 4.
    - Since we know that the first character will always be 'P', we will only read the second character which is the parking position
 
-### The CNN Model 🧠
+### The CNN Model
 
 To read the license plate, we use a convolutional neural network to identify the characters in the plate. The CNN architecture is identical to Lab 6.
 
@@ -193,7 +200,7 @@ history_conv = conv_model.fit(x_dataset, y_dataset,
 
 ---
 
-## Conclusion 📊
+## Conclusion
 
 ### Drive
 
@@ -223,7 +230,7 @@ The license plate identification posed several challenges and time constrain. Wi
 
 ---
 
-## Appendix 📋
+## Appendix
 
 ### Appendix A: State Machine Actions
 

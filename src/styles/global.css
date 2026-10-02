@@ -56,7 +56,12 @@ p { margin: 0; }
   clip: rect(0 0 0 0); white-space: nowrap;
 }
 
+/* Docking: same-origin page changes cross-fade, and an islet's preview grows into the case-study cover. */
+@view-transition { navigation: auto; }
+::view-transition-group(*) { animation-duration: 0.5s; animation-timing-function: var(--ease); }
+
 @media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }

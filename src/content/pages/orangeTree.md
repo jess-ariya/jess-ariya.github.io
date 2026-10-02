@@ -1,6 +1,15 @@
 ---
 title: Orange Garden 🍊
 permalink: /projects/orangeTree/
+tagline: "A calm task tracker where every project grows into a tree."
+colour: "#E8873A"
+cover: "orange-garden.png"
+role: "Solo: design and build"
+stack: "React, Firebase, Vite, Figma, Procreate"
+when: "Feb 2026"
+problem: "Task apps all look the same, and none of them were fun to open."
+process: "Built v1 on intuition in pixel art, then stepped back and rebuilt it around a written plan."
+outcome: "A calm, Monet-inspired garden with generative trees, live at myorangetree.web.app."
 ---
 
 Orange Garden is a calm task tracker where every project grows into an impressionist tree: tasks bloom as blossoms, turn gold when started and ripen orange when done. It began as a pixel-art side project called Orange Tree, and this is the story of building it twice.

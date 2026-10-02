@@ -1,13 +1,17 @@
 ---
 title: Walnut 🌰
 permalink: /projects/walnut/
+tagline: "Lecture notes that transcribe and translate as you listen."
+colour: "#8C6446"
+cover: "walnut.jpg"
+role: "iOS frontend, user research"
+stack: "SwiftUI, Figma, OpenAI API, Jira"
+when: "Sep 2024 – May 2025"
+problem: "Students struggle to take notes while translating and understanding a fast lecture."
+process: "100+ user interviews and Figma prototypes, then SwiftUI learned from scratch to build it."
+outcome: "An MVP that transcribes, translates and explains lecture content in real time."
 ---
 
-Redifing the note-taking experience for students 📚
-
-<div class="project-hero-image">
-  <img src="/assets/img/projects/walnut/WALNUT_slogan.jpg" alt="Walnut Slogan" class="project-image">
-</div>
 
 ## The Problem
 

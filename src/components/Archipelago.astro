@@ -22,7 +22,7 @@ const R = 56; // islet radius: wide enough that the longest name sits inside the
   </svg>
   {projects.map((p, i) => (
     <figure class="tip" data-i={i} aria-hidden="true" style={`left:${(p.at[0] / W) * 100}%;top:${(p.at[1] / H) * 100}%;--tilt:${i % 2 ? 2 : -2}deg`}>
-      <Image src={image(p.image)} alt="" width={360} format="webp" />
+      <Image src={image(p.image)} alt="" width={360} format="webp" style={`view-transition-name: cover-${p.href.split('/').filter(Boolean).pop()}`} />
       <figcaption>{p.blurb}</figcaption>
     </figure>
   ))}

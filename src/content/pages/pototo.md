@@ -1,9 +1,16 @@
 ---
 title: Pototo the Potato 🥔
 permalink: /projects/pototo/
+tagline: "A to-do list for brains that resist starting."
+colour: "#D9B36C"
+cover: "pototo.png"
+role: "Design and development"
+when: "In progress"
+problem: "To-do apps are built for neurotypical brains and overwhelm you the moment you fall behind."
+process: "Informal interviews with friends with ADHD pointed to task initiation and time-blindness."
+outcome: "A gamified mobile app in the works: mini-tasks, focus timers and one unified calendar."
 ---
 
-## Pototo the Potato — Redefining your To-Do List 📝
 
 Recently, I encountered a common frustration: the lack of a **single, frictionless platform** that **seamlessly integrates task management** (down to documenting the details or measuring my progress) and **calendar planning**. I tried using several apps (including the flashy, cute ones) but none of them stuck.
 Today, I still rely on good old Google Calendar 📆 and my physical notebook 📔 for reliable planning.
@@ -13,7 +20,7 @@ This personal struggle became the initial spark 🌟 for my development mission.
 🔎 After conducting **informal user research** with friends, some of them shared about living with ADHD and their profound struggles with task initiation, time-blindness, and missed deadlines. Even simple tasks like doing the laundry or submitting their homework can be easily overlooked. Moreover, they often feel intimidated by "big" tasks and have trouble breaking then down into smaller tasks they can do incrementally, leading to excessive procrastination.
 I quickly realized the design principles required to solve their specific challenges (like gamification and task deconstruction) could simultaneously create the low-friction, high-utility tool I needed. This led me to **embark on a mission** to **build** a **better solution** out there.
 
-## A User-Centric Approach 🙆‍♀️
+## A User-Centric Approach
 
 The first sprouts of Pototo are currently growing 🌱. Pototo is a mobile application designed to help users effectively track tasks and manage progress. While originally conceived for individuals with **ADHD** who struggle with **time-blindness**, **attention regulation**, and **task initiation**, the app is also a powerful tool for anyone tackling procrastination and complex planning.
 <br>
@@ -34,7 +41,7 @@ Pototo is built as a _“Cognitive Ally”_ that transforms tedious scheduling i
 journey, rather than an administrative burden. Traditional apps often feel rigid, becoming overwhelming the moment a user falls behind. Our advantage is a **zero-barrier entry** that removes the high **“setup tax”** the ADHD brain cannot pay. We focus on solving for the most extreme friction
 points: time-blindness and task initiation. We are building a tool that fits the user’s natural flow rather than forcing the user to fit the tool’s structure.
 
-## Sneak Peek 👀
+## Sneak Peek
 
 <div class="screens-carousel">
   <button type="button" class="screens-nav screens-nav--prev" aria-label="Scroll screenshots left">
@@ -102,7 +109,7 @@ The primary challenges for Pototo are sustaining long-term behavioral retention 
 
 ---
 
-## The Journey 🗻
+## The Journey
 
 This journey is in its early stages, but I'm taking a **structured approach** to development:
 

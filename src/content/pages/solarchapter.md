@@ -1,6 +1,9 @@
 ---
 title: SolarChapter ☀️
 permalink: /projects/solarchapter/
+tagline: "A solar-powered pump system for Tasinifu Village, Indonesia."
+colour: "#D9A441"
+role: "Project Development team"
 ---
 
 

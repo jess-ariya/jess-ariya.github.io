@@ -1,7 +1,11 @@
 ---
-// Long-form project pages, served at their original URLs.
+// A case study: painted header in the project's colour, a problem → process → outcome summary,
+// then the full write-up. Served at the project's original URL.
 import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
+import { blob } from '../lib/blob';
+import { projects } from '../data/projects';
 import '../styles/prose.css';
 
 export async function getStaticPaths() {
@@ -13,28 +17,105 @@ export async function getStaticPaths() {
 }
 
 const { page } = Astro.props;
+const d = page.data;
 const { Content } = await render(page);
-const title = page.data.title.replace(/\p{Extended_Pictographic}/gu, '').trim();
+const title = d.title.replace(/\p{Extended_Pictographic}/gu, '').trim();
+
+const covers = import.meta.glob<{ default: ImageMetadata }>('../assets/work/*', { eager: true });
+const cover = d.cover ? covers[`../assets/work/${d.cover}`]?.default : undefined;
+
+const meta = [['Role', d.role], ['Tools', d.stack], ['When', d.when]].filter(([, v]) => v) as [string, string][];
+const summary = [['Problem', d.problem], ['Process', d.process], ['Outcome', d.outcome]].filter(([, v]) => v) as [string, string][];
+
+// Next island along the Work route (featured projects only).
+const here = projects.findIndex((p) => p.href === d.permalink);
+const next = here >= 0 ? projects[(here + 1) % projects.length] : undefined;
+const slug = d.permalink.split('/').filter(Boolean).pop();
 ---
-<Base title={title}>
+<Base title={title} description={d.tagline}>
   <header class="bar">
     <a href="/#work" class="home"><span aria-hidden="true">←</span> back to the voyage</a>
   </header>
-  <main>
-    <span class="hand eyebrow">docked at</span>
-    <h1>{title}</h1>
+
+  <main style={`--c:${d.colour}`}>
+    <section class="head">
+      <svg class="wash" viewBox="0 0 900 320" preserveAspectRatio="none" aria-hidden="true">
+        <path d={blob(450, 160, 150, 0.18, 12, 7)} transform="translate(450 160) scale(1.9 1) translate(-450 -160)" fill={d.colour} opacity=".32" filter="url(#wc)" />
+        <path d={blob(640, 130, 90, 0.3, 9, 19)} fill={d.colour} opacity=".25" filter="url(#wc)" />
+      </svg>
+      <span class="hand eyebrow">docked at</span>
+      <h1>{title}</h1>
+      <p class="tagline">{d.tagline}</p>
+      {meta.length > 0 && (
+        <dl class="meta">
+          {meta.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
+        </dl>
+      )}
+    </section>
+
+    {cover && (
+      <Image class="cover" src={cover} alt="" width={1200} format="webp" style={`view-transition-name: cover-${slug}`} />
+    )}
+
+    {summary.length > 0 && (
+      <ol class="summary">
+        {summary.map(([k, v]) => <li><span class="hand">{k.toLowerCase()}</span><p>{v}</p></li>)}
+      </ol>
+    )}
+
     <article class="prose">
       <Content />
     </article>
+
+    {next && (
+      <a class="next" href={next.href} style={`--n:${next.colour}`}>
+        <span class="hand">next island</span>
+        <b>{next.name} <span aria-hidden="true">→</span></b>
+        <small>{next.blurb}</small>
+      </a>
+    )}
   </main>
 </Base>
 
 <style>
-  .bar, main { padding-inline: var(--gutter); max-width: 880px; margin-inline: auto; }
-  .bar { padding-block: 28px; }
+  .bar, main { padding-inline: var(--gutter); max-width: 880px; margin-inline: auto; box-sizing: content-box; }
+  .bar { padding-block: 28px 0; }
   .home { font: 20px var(--hand); color: var(--walnut); text-decoration: none; }
-  .home:hover span { display: inline-block; transform: translateX(-3px); transition: transform 0.3s var(--ease); }
-  main { padding-block: 32px 120px; }
+  .home span { display: inline-block; transition: transform 0.3s var(--ease); }
+  .home:hover span { transform: translateX(-4px); }
+  main { padding-block: 24px 120px; display: grid; gap: 40px; }
+
+  .head { position: relative; display: grid; gap: 10px; padding-block: 48px 8px; isolation: isolate; }
+  .wash { position: absolute; inset: 0 -8%; width: 116%; height: 100%; z-index: -1; overflow: visible; }
   .eyebrow { font-size: 20px; }
-  h1 { font-size: clamp(40px, 7vw, 72px); line-height: 1; margin-bottom: 24px; }
+  h1 { font-size: clamp(44px, 8vw, 84px); line-height: 0.95; }
+  .tagline { font-size: clamp(18px, 2.2vw, 21px); max-width: 40ch; }
+  .meta { display: flex; flex-wrap: wrap; gap: 12px 36px; margin: 18px 0 0; }
+  .meta dt { font: 17px var(--hand); color: var(--walnut); }
+  .meta dd { margin: 0; font-size: 15px; }
+
+  .cover {
+    width: 100%; height: auto; max-height: 460px; object-fit: cover;
+    border: 1.5px solid var(--ink); border-radius: 22px 16px 26px 18px; background: var(--paper-light);
+  }
+
+  .summary { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+  .summary li {
+    display: grid; gap: 6px; align-content: start; padding: 18px 20px;
+    background: var(--paper-light); border-radius: 22px 16px 24px 18px;
+    box-shadow: inset 0 4px 0 color-mix(in srgb, var(--c) 70%, transparent);
+  }
+  .summary .hand { font-size: 21px; }
+  .summary p { font-size: 15px; line-height: 1.5; }
+
+  .next {
+    display: grid; gap: 2px; justify-self: start; text-decoration: none; margin-top: 24px;
+    padding: 20px 26px; border: 1.5px solid var(--ink); border-radius: 26px 20px 28px 22px;
+    background: color-mix(in srgb, var(--n) 22%, var(--paper));
+    transition: transform 0.4s var(--ease), background 0.4s;
+  }
+  .next:hover { transform: rotate(-1deg) translateY(-2px); background: color-mix(in srgb, var(--n) 40%, var(--paper)); }
+  .next .hand { font-size: 19px; }
+  .next b { font: 400 28px var(--display); }
+  .next small { color: var(--muted); font-size: 14px; }
 </style>
