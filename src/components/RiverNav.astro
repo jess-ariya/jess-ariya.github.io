@@ -12,7 +12,7 @@ import { stops } from '../data/voyage';
 
 <style>
   .river {
-    position: fixed; left: 0; top: 0; bottom: 0; width: 120px; z-index: 20;
+    position: fixed; left: 0; top: 0; bottom: 0; width: 150px; z-index: 20;
     opacity: 0; pointer-events: none; transition: opacity 0.6s var(--ease);
   }
   .river:global(.show) { opacity: 1; pointer-events: auto; }
@@ -56,7 +56,7 @@ import { stops } from '../data/voyage';
   function draw() {
     root.replaceChildren();
     const horizontal = innerWidth <= 760;
-    const W = horizontal ? innerWidth : 120, H = horizontal ? 84 : innerHeight;
+    const W = horizontal ? innerWidth : 150, H = horizontal ? 84 : innerHeight;
     root.setAttribute('viewBox', `0 0 ${W} ${H}`);
 
     // Sine meander plus noise, so it never looks ruled or symmetrical.
@@ -65,7 +65,7 @@ import { stops } from '../data/voyage';
     for (let i = 0; i <= n; i++) {
       const t = i / n, along = 30 + t * (span - 60);
       const lateral = Math.sin(t * Math.PI * 2.6 + 0.6) * amp + (rnd() - 0.5) * amp * 0.9;
-      pts.push(horizontal ? [along, 40 + lateral * 0.7] : [55 + lateral, along]);
+      pts.push(horizontal ? [along, 40 + lateral * 0.7] : [80 + lateral, along]);
     }
     const d = smoothPath(pts);
     svg('path', { d, fill: 'none', stroke: '#9DB3B5', 'stroke-width': horizontal ? 12 : 16, 'stroke-linecap': 'round', opacity: 0.55, filter: 'url(#wc)' }, root);
