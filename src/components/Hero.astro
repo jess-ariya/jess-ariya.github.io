@@ -2,9 +2,11 @@
 // Opening scene: Jesslyn rowing on a painted sea, with orange fish.
 // Stand-in art drawn in code; swap the <svg> inside .vessel for painted PNG layers later.
 const bubbles = [
-  "Hey there! I'm Jesslyn 👋",
-  'Engineer, generalist, painter on weekends.',
-  "Come along, I'll show you around →",
+  "Hey there! I'm Jesslyn",
+  'I love creating, learning, &amp; solving problems',
+  'I consider myself more of a generalist, where I have a broad range of interests',
+  '<strong>Focus: Software Development</strong>',
+  '📍 Vancouver, Canada',
 ];
 ---
 <section class="hero" id="hero" aria-label="Jesslyn rowing a boat on a painted sea">
@@ -29,7 +31,7 @@ const bubbles = [
 
   <div class="vessel" data-vessel>
     <div class="bubbles" aria-live="polite">
-      {bubbles.map((text) => <p class="bubble">{text}</p>)}
+      {bubbles.map((text) => <p class="bubble" set:html={text} />)}
     </div>
     <svg viewBox="0 0 260 170" aria-hidden="true">
       <g data-oar="back" style="transform-origin:150px 96px">
@@ -61,12 +63,12 @@ const bubbles = [
   .hero-copy { position: absolute; left: var(--gutter); top: clamp(28px, 7vh, 64px); display: grid; gap: 8px; z-index: 3; pointer-events: none; }
   h1 { font-size: clamp(34px, 5.5vw, 64px); line-height: 1; }
   .hero-copy .hand { font-size: 22px; }
-  .vessel { position: absolute; left: 12%; top: 52%; width: clamp(170px, 22vw, 260px); z-index: 2; will-change: transform; }
+  .vessel { position: absolute; left: 10%; top: 60%; width: clamp(170px, 22vw, 260px); z-index: 2; will-change: transform; }
   .vessel svg { width: 100%; height: auto; display: block; overflow: visible; }
-  .bubbles { position: absolute; left: 58%; bottom: 88%; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; width: max-content; max-width: min(300px, 70vw); }
+  .bubbles { position: absolute; left: 66%; bottom: 62%; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; width: max-content; max-width: min(280px, 62vw); }
   .bubble {
     background: var(--bubble); border: 1.5px solid var(--ink); padding: 7px 14px;
-    border-radius: 16px 16px 16px 4px; font-size: 15px; line-height: 1.35;
+    border-radius: 16px 16px 16px 4px; font-size: 14px; line-height: 1.35;
     transform-origin: 0 100%; opacity: 0; transform: scale(0.6) translateY(6px);
   }
   .bubble:global(.on) { animation: pop 0.45s var(--ease) forwards; }
@@ -75,8 +77,8 @@ const bubbles = [
   .cue span { display: inline-block; animation: nudge 2.4s ease-in-out infinite; }
   @keyframes nudge { 50% { transform: translateX(6px); } }
   @media (max-width: 560px) {
-    .vessel { left: 6%; top: 58%; }
-    .bubbles { left: 30%; }
+    .vessel { left: 4%; top: 64%; }
+    .bubbles { left: 40%; }
   }
   @media (prefers-reduced-motion: reduce) { .bubble { opacity: 1; transform: none; } }
 </style>
@@ -100,7 +102,7 @@ const bubbles = [
   };
 
   // Chat bubbles pop up one after another from the rower.
-  hero.querySelectorAll('.bubble').forEach((b, i) => setTimeout(() => b.classList.add('on'), reduce ? 0 : 700 + i * 900));
+  hero.querySelectorAll('.bubble').forEach((b, i) => setTimeout(() => b.classList.add('on'), reduce ? 0 : 600 + i * 750));
 
   // Three fish swimming lazy figure-eights; a click on the water scatters them.
   const fish = ([[380, 520, 90, 26, 0.5], [760, 470, 120, 30, -0.4], [980, 600, 80, 20, 0.65]] as const).map(([cx, cy, rx, ry, speed], i) => {
