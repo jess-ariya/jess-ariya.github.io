@@ -80,7 +80,8 @@ const bubbles = [
   .hero-copy .hand { font-size: 22px; }
   .vessel { position: absolute; left: 10%; top: 60%; width: clamp(170px, 22vw, 260px); z-index: 2; will-change: transform; }
   .vessel svg { width: 100%; height: auto; display: block; overflow: visible; }
-  .bubbles { position: absolute; left: 66%; bottom: 62%; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; width: max-content; max-width: min(280px, 62vw); }
+  .bubbles { position: absolute; left: 66%; bottom: 62%; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; width: max-content; max-width: min(280px, 62vw); transition: opacity 0.35s var(--ease), transform 0.35s var(--ease); }
+  .bubbles:global(.gone) { opacity: 0; transform: translateY(-8px); pointer-events: none; }
   .bubble {
     background: var(--bubble); border: 1.5px solid var(--ink); padding: 7px 14px;
     border-radius: 16px 16px 16px 4px; font-size: 14px; line-height: 1.35;
@@ -116,6 +117,7 @@ const bubbles = [
   const vessel = hero.querySelector<HTMLElement>('[data-vessel]')!;
   const oarFront = hero.querySelector<SVGGElement>('[data-oar="front"]')!;
   const oarBack = hero.querySelector<SVGGElement>('[data-oar="back"]')!;
+  const bubbleStack = hero.querySelector<HTMLElement>('.bubbles')!;
   const fishLayer = hero.querySelector('[data-fish]')!;
   const rippleLayer = hero.querySelector('[data-ripples]')!;
 
@@ -185,6 +187,7 @@ const bubbles = [
     const s = reduce ? 0 : now / 1000;
     // Scrolling through the hero rows the boat off to the right, towards the river.
     const progress = Math.min(1, scrollY / hero.offsetHeight);
+    bubbleStack.classList.toggle('gone', scrollY > 24); // the chat clears once you start rowing
     vessel.style.transform = `translate(${progress * innerWidth * 0.7}px, ${Math.sin(s * 1.6) * 4}px) rotate(${Math.sin(s * 1.6 + 0.8) * 1.4}deg)`;
     const stroke = Math.sin(s * 2.2) * 14;
     oarFront.style.transform = `rotate(${stroke}deg)`;
