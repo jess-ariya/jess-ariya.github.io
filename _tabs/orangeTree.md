@@ -13,7 +13,7 @@ Live at [myorangetree.web.app](https://myorangetree.web.app).
   <video width="100%" controls muted playsinline loop preload="metadata" poster="/assets/img/projects/orangeTree/v2/01-garden.png">
     <source src="/assets/img/projects/orangeTree/v2/walkthrough.webm" type="video/webm">
   </video>
-  <p><em>A 30-second walkthrough of Orange Garden</em></p>
+  <p><em>A 20-second walkthrough of Orange Garden</em></p>
 </div>
 
 ## The Why

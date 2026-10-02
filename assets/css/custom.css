@@ -854,6 +854,7 @@ h2::after {
 /* Item sized to its content instead of stretching to fill the row */
 .image-item--auto {
   flex: 0 0 auto;
+  max-width: 100%;
 }
 
 /* Item with a caption pinned below a fixed-height image */
