@@ -97,12 +97,10 @@ This design's simplicity makes it highly robust. By moving the sensors over the 
 <br>
 
 ## Challenges and Future Plan
-There are still limitations and challenges remaining in our system. Presently, only one seed can
-be scanned and measured at a time, which restricts the throughput. Additionally, the integration
-of several sensors into the system is pending.
-In our next step, we aim to enhance throughput to approximately 200,000 seeds per day. This
-will involve the integration and verification of additional sensors over the summer. Furthermore,
-a rigorous cleaning protocol ought to be implemented to prevent potential contamination
+There are still limitations and challenges remaining in our system. Presently, only one seed can be scanned and measured at a time, which restricts the throughput. Additionally, the integration of several sensors into the system is pending.
+
+In our next step, we aim to enhance throughput to approximately 200,000 seeds per day. This will involve the integration and verification of additional sensors over the summer. Furthermore, a rigorous cleaning protocol ought to be implemented to prevent potential contamination.
+
 ---
 
 <a href="/" class="back-link">← Back to Home</a> 
