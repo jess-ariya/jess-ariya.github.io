@@ -1,8 +1,6 @@
 ---
-layout: page
 title: Orange Garden 🍊
 permalink: /projects/orangeTree/
-order: 4
 ---
 
 Orange Garden is a calm task tracker where every project grows into an impressionist tree: tasks bloom as blossoms, turn gold when started and ripen orange when done. It began as a pixel-art side project called Orange Tree, and this is the story of building it twice.

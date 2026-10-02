@@ -1,8 +1,6 @@
 ---
-layout: page
 title: Pototo the Potato 🥔
 permalink: /projects/pototo/
-order: 7
 ---
 
 ## Pototo the Potato — Redefining your To-Do List 📝

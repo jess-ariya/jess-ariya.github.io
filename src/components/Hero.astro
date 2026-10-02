@@ -1,0 +1,158 @@
+---
+// Opening scene: Jesslyn rowing on a painted sea, with orange fish.
+// Stand-in art drawn in code; swap the <svg> inside .vessel for painted PNG layers later.
+const bubbles = [
+  "Hey there! I'm Jesslyn 👋",
+  'Engineer, generalist, painter on weekends.',
+  "Come along, I'll show you around →",
+];
+---
+<section class="hero" id="hero" aria-label="Jesslyn rowing a boat on a painted sea">
+  <svg class="sea" id="sea" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <g filter="url(#wc)">
+      <path d="M-40 330 C 200 300, 420 350, 640 320 S 1040 300, 1260 330 L1260 760 L-40 760 Z" fill="#9DB3B5" opacity=".75" />
+      <path d="M-40 420 C 260 395, 520 450, 780 410 S 1100 420, 1260 400 L1260 760 L-40 760 Z" fill="#8AA3A6" opacity=".55" />
+      <path d="M-40 560 C 300 540, 640 590, 900 555 S 1160 560, 1260 545 L1260 760 L-40 760 Z" fill="#7E989B" opacity=".45" />
+    </g>
+    <g fill="none" stroke="#F1EFE9" stroke-width="2" stroke-linecap="round" opacity=".8" filter="url(#wobble)">
+      <path d="M140 390 q 20 -6 40 0" /><path d="M880 370 q 26 -7 52 0" /><path d="M560 470 q 18 -5 36 0" />
+      <path d="M1020 510 q 22 -6 44 0" /><path d="M300 600 q 26 -6 52 0" />
+    </g>
+    <g data-fish></g>
+    <g data-ripples fill="none" stroke="#F1EFE9" stroke-width="2"></g>
+  </svg>
+
+  <div class="hero-copy">
+    <h1>Jesslyn Devina</h1>
+    <span class="hand">builder of small, joyful things</span>
+  </div>
+
+  <div class="vessel" data-vessel>
+    <div class="bubbles" aria-live="polite">
+      {bubbles.map((text) => <p class="bubble">{text}</p>)}
+    </div>
+    <svg viewBox="0 0 260 170" aria-hidden="true">
+      <g data-oar="back" style="transform-origin:150px 96px">
+        <path d="M150 96 L 228 150" stroke="#6B4A33" stroke-width="5" stroke-linecap="round" />
+        <ellipse cx="232" cy="153" rx="14" ry="6" fill="#6B4A33" transform="rotate(35 232 153)" />
+      </g>
+      <g filter="url(#wc)">
+        <ellipse cx="128" cy="72" rx="20" ry="24" fill="#E8873A" />
+        <path d="M108 70 q 20 -20 40 0 l 0 30 l -40 0 z" fill="#E8873A" />
+      </g>
+      <circle cx="128" cy="40" r="15" fill="#E9C9A9" stroke="#2B2A26" stroke-width="1.5" />
+      <path d="M113 38 q 2 -18 18 -16 q 14 2 12 16 q -6 -8 -16 -6 q -8 2 -14 6 z" fill="#2B2A26" />
+      <circle cx="140" cy="24" r="7" fill="#2B2A26" />
+      <g filter="url(#wc)"><path d="M30 98 Q 130 92 230 98 Q 214 140 130 142 Q 50 140 30 98 Z" fill="#8C6446" /></g>
+      <path d="M30 98 Q 130 92 230 98 Q 214 140 130 142 Q 50 140 30 98 Z" fill="none" stroke="#2B2A26" stroke-width="1.6" />
+      <path d="M44 112 Q 130 118 218 112" fill="none" stroke="#2B2A26" stroke-width="1" opacity=".5" />
+      <g data-oar="front" style="transform-origin:120px 98px">
+        <path d="M120 98 L 40 152" stroke="#6B4A33" stroke-width="5" stroke-linecap="round" />
+        <ellipse cx="34" cy="156" rx="14" ry="6" fill="#6B4A33" transform="rotate(-35 34 156)" />
+      </g>
+    </svg>
+  </div>
+  <p class="cue" aria-hidden="true">scroll to row along <span>→</span></p>
+</section>
+
+<style>
+  .hero { position: relative; height: clamp(520px, 92vh, 860px); overflow: hidden; cursor: crosshair; }
+  .sea { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .hero-copy { position: absolute; left: var(--gutter); top: clamp(28px, 7vh, 64px); display: grid; gap: 8px; z-index: 3; pointer-events: none; }
+  h1 { font-size: clamp(34px, 5.5vw, 64px); line-height: 1; }
+  .hero-copy .hand { font-size: 22px; }
+  .vessel { position: absolute; left: 12%; top: 52%; width: clamp(170px, 22vw, 260px); z-index: 2; will-change: transform; }
+  .vessel svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .bubbles { position: absolute; left: 58%; bottom: 88%; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; width: max-content; max-width: min(300px, 70vw); }
+  .bubble {
+    background: var(--bubble); border: 1.5px solid var(--ink); padding: 7px 14px;
+    border-radius: 16px 16px 16px 4px; font-size: 15px; line-height: 1.35;
+    transform-origin: 0 100%; opacity: 0; transform: scale(0.6) translateY(6px);
+  }
+  .bubble:global(.on) { animation: pop 0.45s var(--ease) forwards; }
+  @keyframes pop { to { opacity: 1; transform: none; } }
+  .cue { position: absolute; right: var(--gutter); bottom: 24px; font: 20px var(--hand); color: var(--walnut); z-index: 3; pointer-events: none; }
+  .cue span { display: inline-block; animation: nudge 2.4s ease-in-out infinite; }
+  @keyframes nudge { 50% { transform: translateX(6px); } }
+  @media (max-width: 560px) {
+    .vessel { left: 6%; top: 58%; }
+    .bubbles { left: 30%; }
+  }
+  @media (prefers-reduced-motion: reduce) { .bubble { opacity: 1; transform: none; } }
+</style>
+
+<script>
+  const NS = 'http://www.w3.org/2000/svg';
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const hero = document.getElementById('hero')!;
+  const sea = document.getElementById('sea') as unknown as SVGSVGElement;
+  const vessel = hero.querySelector<HTMLElement>('[data-vessel]')!;
+  const oarFront = hero.querySelector<SVGGElement>('[data-oar="front"]')!;
+  const oarBack = hero.querySelector<SVGGElement>('[data-oar="back"]')!;
+  const fishLayer = hero.querySelector('[data-fish]')!;
+  const rippleLayer = hero.querySelector('[data-ripples]')!;
+
+  const svg = (tag: string, attrs: Record<string, string | number>, parent: Element) => {
+    const n = document.createElementNS(NS, tag);
+    for (const k in attrs) n.setAttribute(k, String(attrs[k]));
+    parent.appendChild(n);
+    return n;
+  };
+
+  // Chat bubbles pop up one after another from the rower.
+  hero.querySelectorAll('.bubble').forEach((b, i) => setTimeout(() => b.classList.add('on'), reduce ? 0 : 700 + i * 900));
+
+  // Three fish swimming lazy figure-eights; a click on the water scatters them.
+  const fish = ([[380, 520, 90, 26, 0.5], [760, 470, 120, 30, -0.4], [980, 600, 80, 20, 0.65]] as const).map(([cx, cy, rx, ry, speed], i) => {
+    const g = svg('g', {}, fishLayer);
+    const body = svg('g', { filter: 'url(#wc)' }, g);
+    svg('ellipse', { cx: 0, cy: 0, rx: 16, ry: 8, fill: '#E8873A' }, body);
+    svg('path', { d: 'M-14 0 L-26 -8 L-24 0 L-26 8 Z', fill: '#E8873A' }, body);
+    svg('circle', { cx: 9, cy: -2, r: 1.6, fill: '#2B2A26' }, g);
+    return { g, cx, cy, rx, ry, speed, t: i * 2, ox: 0, oy: 0, vx: 0, vy: 0, px: cx, py: cy };
+  });
+
+  hero.addEventListener('click', (e) => {
+    const pt = sea.createSVGPoint();
+    pt.x = e.clientX; pt.y = e.clientY;
+    const p = pt.matrixTransform(sea.getScreenCTM()!.inverse());
+    if (p.y < 320) return; // sky, not water
+    const ring = svg('ellipse', { cx: p.x, cy: p.y, rx: 4, ry: 1.5 }, rippleLayer);
+    const t0 = performance.now();
+    const grow = (t: number) => {
+      const k = (t - t0) / 1200;
+      if (k >= 1) return ring.remove();
+      ring.setAttribute('rx', String(4 + k * 70));
+      ring.setAttribute('ry', String(1.5 + k * 22));
+      ring.setAttribute('opacity', String(1 - k));
+      requestAnimationFrame(grow);
+    };
+    requestAnimationFrame(grow);
+    for (const f of fish) {
+      const dx = f.px - p.x, dy = f.py - p.y, d = Math.hypot(dx, dy) || 1;
+      if (d < 380) { f.vx += (dx / d) * 9; f.vy += (dy / d) * 4; }
+    }
+  });
+
+  function frame(now: number) {
+    const s = reduce ? 0 : now / 1000;
+    // Scrolling through the hero rows the boat off to the right, towards the river.
+    const progress = Math.min(1, scrollY / hero.offsetHeight);
+    vessel.style.transform = `translate(${progress * innerWidth * 0.7}px, ${Math.sin(s * 1.6) * 4}px) rotate(${Math.sin(s * 1.6 + 0.8) * 1.4}deg)`;
+    const stroke = Math.sin(s * 2.2) * 14;
+    oarFront.style.transform = `rotate(${stroke}deg)`;
+    oarBack.style.transform = `rotate(${-stroke}deg)`;
+    for (const f of fish) {
+      if (!reduce) f.t += 0.012 * f.speed;
+      f.ox += f.vx; f.oy += f.vy;
+      f.vx *= 0.93; f.vy *= 0.93; f.ox *= 0.985; f.oy *= 0.985;
+      const x = f.cx + Math.cos(f.t) * f.rx + f.ox;
+      const y = f.cy + Math.sin(f.t * 2) * f.ry * 0.5 + f.oy;
+      const angle = (Math.atan2(y - f.py, x - f.px) * 180) / Math.PI;
+      f.px = x; f.py = y;
+      f.g.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${angle.toFixed(1)})`);
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+</script>

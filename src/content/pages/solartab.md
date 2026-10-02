@@ -1,8 +1,6 @@
 ---
-layout: page
 title: SolarTab 💡
 permalink: /projects/solartab/
-order: 12
 ---
 
 # Powering Digital Learning, Anywhere 🌍

@@ -1,8 +1,6 @@
 ---
-layout: page
 title: SolarChapter ☀️
 permalink: /projects/solarchapter/
-order: 8
 ---
 
 

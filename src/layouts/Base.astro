@@ -1,0 +1,35 @@
+---
+import '../styles/global.css';
+import WatercolourDefs from '../components/WatercolourDefs.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title,
+  description = 'Jesslyn Devina — engineer and generalist in Vancouver, building small, joyful things.',
+} = Astro.props;
+const fullTitle = title ? `${title} · Jesslyn Devina` : 'Jesslyn Devina';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <link rel="icon" href="/assets/img/favicon/favicon-32x32.png" />
+    <link rel="apple-touch-icon" href="/assets/img/favicon/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Geist:wght@400;500&family=Gochi+Hand&display=swap" />
+  </head>
+  <body>
+    <WatercolourDefs />
+    <slot />
+  </body>
+</html>

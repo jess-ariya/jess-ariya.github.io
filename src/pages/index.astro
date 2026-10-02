@@ -1,0 +1,91 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import RiverNav from '../components/RiverNav.astro';
+import Archipelago from '../components/Archipelago.astro';
+import PlayGrid from '../components/PlayGrid.astro';
+---
+<Base>
+  <Hero />
+  <RiverNav />
+  <main>
+    <section class="stop" id="hello">
+      <header>
+        <span class="hand eyebrow">home port</span>
+        <h2>Hello, I build things.</h2>
+      </header>
+      <p class="lede">
+        I studied Engineering Physics at UBC and now work as a web developer at 0Footprint in Vancouver.
+        I like creative problem spaces, I learn whatever the project needs, and I'd call myself a generalist
+        with a focus on software.
+      </p>
+    </section>
+
+    <section class="stop" id="about">
+      <header>
+        <span class="hand eyebrow">the lighthouse</span>
+        <h2>About</h2>
+      </header>
+      <ol class="timeline">
+        <li><span class="yr">2025 – now</span><span><b>Web Developer</b><small>0Footprint · Vancouver</small></span></li>
+        <li><span class="yr">2020 – 2025</span><span><b>BASc, Engineering Physics</b><small>University of British Columbia</small></span></li>
+      </ol>
+      <a class="btn" href="/assets/resume/resume.pdf" target="_blank" rel="noopener">Read my résumé (PDF) <span aria-hidden="true">↗</span></a>
+    </section>
+
+    <section class="stop" id="work">
+      <header>
+        <span class="hand eyebrow">the big island</span>
+        <h2>Work</h2>
+        <p class="lede">Five islets, five case studies. Hover one to see it in colour, click to dock.</p>
+      </header>
+      <Archipelago />
+    </section>
+
+    <section class="stop" id="play">
+      <header>
+        <span class="hand eyebrow">the side quests</span>
+        <h2>Play</h2>
+        <p class="lede">Watercolours, prints and machined things I made because I wanted to.</p>
+      </header>
+      <PlayGrid />
+    </section>
+  </main>
+  <footer>
+    <p>Made by hand in Vancouver · <a href="https://github.com/jess-ariya">GitHub</a> · <a href="mailto:jesslynariyadev@gmail.com">Email</a></p>
+  </footer>
+</Base>
+
+<style>
+  main, footer { padding-left: var(--nav-w); padding-right: var(--gutter); }
+  .stop { padding-block: 96px; display: grid; gap: 28px; max-width: 960px; scroll-margin-top: 24px; }
+  .stop > header { display: grid; gap: 6px; }
+  .eyebrow { font-size: 20px; }
+  h2 { font-size: clamp(32px, 4.5vw, 48px); line-height: 1.05; }
+  .lede { font-size: 18px; color: var(--muted); max-width: 60ch; }
+
+  .timeline { list-style: none; margin: 0; padding: 0; border-top: 1.5px dashed var(--sea-deep); max-width: 720px; }
+  .timeline li {
+    display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 16px; align-items: baseline;
+    padding-block: 16px; border-bottom: 1.5px dashed var(--sea-deep);
+  }
+  .timeline b { font: 400 21px/1.2 var(--display); }
+  .timeline small { display: block; color: var(--muted); font-size: 14px; }
+  .yr { color: var(--muted); font-size: 14px; font-variant-numeric: tabular-nums; }
+  .btn {
+    justify-self: start; display: inline-flex; gap: 10px; align-items: center; padding: 11px 20px;
+    background: var(--ink); color: var(--paper); text-decoration: none; border-radius: 999px; font-size: 15px;
+    transition: background 0.3s;
+  }
+  .btn:hover { background: var(--walnut); }
+  footer { padding-block: 48px 120px; color: var(--muted); font-size: 14px; }
+  footer a { color: var(--walnut); }
+
+  @media (max-width: 760px) {
+    main, footer { padding-left: 16px; padding-right: 16px; }
+    footer { padding-bottom: 120px; }
+  }
+  @media (max-width: 520px) {
+    .timeline li { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  }
+</style>

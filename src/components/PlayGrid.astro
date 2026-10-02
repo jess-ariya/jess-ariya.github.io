@@ -1,0 +1,151 @@
+---
+// Masonry of real photos; clicking a tile opens a lightbox that steps through that item's images.
+import { getImage } from 'astro:assets';
+import { play } from '../data/play';
+import { sideProjects } from '../data/projects';
+
+const files = import.meta.glob<{ default: ImageMetadata }>('../assets/play/**/*.{jpg,JPG,png}', { eager: true });
+const load = (src: string) => {
+  const file = files[`../assets/play/${src}`];
+  if (!file) throw new Error(`Missing play image: ${src}`);
+  return file.default;
+};
+
+const items = await Promise.all(
+  play.map(async (item) => {
+    const thumb = await getImage({ src: load(item.images[0].src), width: 640, format: 'webp' });
+    const full = await Promise.all(
+      item.images.map(async (img) => ({
+        ...img,
+        url: (await getImage({ src: load(img.src), width: 1600, format: 'webp' })).src,
+      })),
+    );
+    return { ...item, thumb, full };
+  }),
+);
+---
+<div class="grid">
+  {items.map((item, i) => (
+    <button class="tile" type="button" data-item={i} aria-haspopup="dialog">
+      <img
+        src={item.thumb.src}
+        width={item.thumb.attributes.width}
+        height={item.thumb.attributes.height}
+        alt={item.images[0].alt}
+        loading="lazy"
+        decoding="async"
+      />
+      <span class="cap">
+        {item.title}
+        {item.full.length > 1 && <span class="count">+{item.full.length - 1}</span>}
+      </span>
+    </button>
+  ))}
+</div>
+
+<p class="more">
+  More voyages:{' '}
+  {sideProjects.map((p, i) => (
+    <>
+      <a href={p.href}>{p.name}</a>, {p.blurb.charAt(0).toLowerCase() + p.blurb.slice(1)}{i < sideProjects.length - 1 ? '; ' : '.'}
+    </>
+  ))}
+</p>
+
+<dialog class="lightbox" data-lightbox aria-label="Image viewer">
+  <figure>
+    <img data-lb-img alt="" />
+    <figcaption>
+      <span class="hand" data-lb-title></span>
+      <span data-lb-note></span>
+    </figcaption>
+  </figure>
+  <div class="controls">
+    <button type="button" data-lb-prev aria-label="Previous image">←</button>
+    <span data-lb-count></span>
+    <button type="button" data-lb-next aria-label="Next image">→</button>
+    <button type="button" data-lb-close class="close">Close</button>
+  </div>
+</dialog>
+
+<script is:inline type="application/json" data-play-items set:html={JSON.stringify(items.map((it) => ({ title: it.title, note: it.note, images: it.full.map(({ url, alt, caption }) => ({ url, alt, caption })) })))} />
+
+<style>
+  .grid { columns: 3 200px; column-gap: 16px; }
+  .tile {
+    all: unset; box-sizing: border-box; display: block; width: 100%; break-inside: avoid;
+    margin-bottom: 18px; cursor: zoom-in;
+  }
+  .tile img {
+    width: 100%; height: auto; border-radius: 14px 10px 16px 12px;
+    transition: transform 0.6s var(--ease), box-shadow 0.6s var(--ease);
+  }
+  .tile:hover img, .tile:focus-visible img { transform: rotate(-1deg) scale(1.015); box-shadow: 0 10px 24px -14px rgb(43 42 38 / 0.5); }
+  .tile:focus-visible { outline: 2px solid var(--walnut); outline-offset: 4px; border-radius: 14px; }
+  .cap { display: flex; gap: 8px; align-items: baseline; margin-top: 4px; font: 20px var(--hand); color: var(--walnut); transition: transform 0.4s var(--ease); }
+  .tile:hover .cap { transform: translateX(4px) rotate(-1.5deg); }
+  .count { font: 13px var(--body); color: var(--muted); }
+  .more { color: var(--muted); max-width: 65ch; }
+  .more a { color: var(--walnut); text-underline-offset: 3px; }
+
+  .lightbox {
+    border: 0; padding: 0; background: transparent; max-width: min(1100px, 100vw - 32px); max-height: calc(100vh - 32px);
+    color: var(--ink);
+  }
+  .lightbox::backdrop { background: rgb(231 228 221 / 0.94); }
+  .lightbox[open] { animation: rise 0.35s var(--ease); }
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } }
+  figure { margin: 0; display: grid; gap: 12px; justify-items: center; }
+  figure img { max-height: calc(100vh - 200px); width: auto; border-radius: 14px 10px 16px 12px; }
+  figcaption { display: grid; gap: 2px; text-align: center; max-width: 60ch; color: var(--muted); }
+  figcaption .hand { font-size: 24px; }
+  .controls { display: flex; gap: 10px; justify-content: center; align-items: center; margin-top: 14px; }
+  .controls button {
+    font: 15px var(--body); background: var(--paper-light); color: var(--ink); border: 1.5px solid var(--ink);
+    border-radius: 999px; padding: 6px 14px; cursor: pointer;
+  }
+  .controls button:hover { background: var(--ink); color: var(--paper); }
+  .controls .close { margin-left: 12px; }
+  [data-lb-count] { font-size: 14px; color: var(--muted); min-width: 4ch; text-align: center; font-variant-numeric: tabular-nums; }
+</style>
+
+<script>
+  type Item = { title: string; note: string; images: { url: string; alt: string; caption?: string }[] };
+  const items: Item[] = JSON.parse(document.querySelector('[data-play-items]')!.textContent!);
+  const dialog = document.querySelector<HTMLDialogElement>('[data-lightbox]')!;
+  const img = dialog.querySelector<HTMLImageElement>('[data-lb-img]')!;
+  const title = dialog.querySelector('[data-lb-title]')!;
+  const note = dialog.querySelector('[data-lb-note]')!;
+  const count = dialog.querySelector('[data-lb-count]')!;
+  const prev = dialog.querySelector<HTMLButtonElement>('[data-lb-prev]')!;
+  const next = dialog.querySelector<HTMLButtonElement>('[data-lb-next]')!;
+  let item: Item, index = 0;
+
+  function show() {
+    const pic = item.images[index];
+    img.src = pic.url;
+    img.alt = pic.alt;
+    title.textContent = pic.caption ? `${item.title}, ${pic.caption}` : item.title;
+    note.textContent = item.note;
+    const many = item.images.length > 1;
+    prev.hidden = next.hidden = count.hidden = !many;
+    count.textContent = `${index + 1} / ${item.images.length}`;
+  }
+  const step = (d: number) => { index = (index + d + item.images.length) % item.images.length; show(); };
+
+  document.querySelectorAll<HTMLButtonElement>('.tile[data-item]').forEach((tile) =>
+    tile.addEventListener('click', () => {
+      item = items[Number(tile.dataset.item)];
+      index = 0;
+      show();
+      dialog.showModal();
+    }));
+  prev.addEventListener('click', () => step(-1));
+  next.addEventListener('click', () => step(1));
+  dialog.querySelector('[data-lb-close]')!.addEventListener('click', () => dialog.close());
+  dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
+  dialog.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') step(-1);
+    if (e.key === 'ArrowRight') step(1);
+  });
+</script>

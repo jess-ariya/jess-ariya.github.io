@@ -1,8 +1,6 @@
 ---
-layout: page
 title: Traffibot 🚙
 permalink: /projects/traffibot/
-order: 9
 ---
 
 # TraffiBot: ROS & ML Autonomous Traffic Control Robot 🚦

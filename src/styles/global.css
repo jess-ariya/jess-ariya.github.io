@@ -1,0 +1,62 @@
+/* Paint box: the only colours and type the site uses. Light-only by design. */
+:root {
+  color-scheme: light;
+  --paper: #e7e4dd;
+  --paper-light: #efece6;
+  --bubble: #f4f2ec;
+  --stone: #d8d4cb;
+  --sea: #9db3b5;
+  --sea-deep: #7e989b;
+  --leaf: #a9c178;
+  --moss: #5f7d43;
+  --orange: #e8873a;
+  --skin: #e9c9a9;
+  --wood: #8c6446;
+  --walnut: #6b4a33;
+  --ink: #2b2a26;
+  --muted: #5e5c56;
+
+  --display: 'Young Serif', 'Iowan Old Style', Georgia, serif;
+  --body: 'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --hand: 'Gochi Hand', 'Bradley Hand', 'Comic Sans MS', cursive;
+
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --gutter: clamp(16px, 5vw, 64px);
+  --nav-w: 150px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 16px/1.65 var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+/* Paper grain */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0.07;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--walnut); outline-offset: 3px; border-radius: 4px; }
+h1, h2, h3, h4 { font-family: var(--display); font-weight: 400; margin: 0; text-wrap: balance; letter-spacing: -0.005em; }
+p { margin: 0; }
+.hand { font-family: var(--hand); color: var(--walnut); }
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

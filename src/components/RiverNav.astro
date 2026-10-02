@@ -1,0 +1,132 @@
+---
+// A meandering river down the left edge (along the bottom on phones). Each stop is an island;
+// a small boat follows your scroll. Drawn client-side because its shape depends on the viewport.
+import { stops } from '../data/voyage';
+---
+<nav class="river" data-river aria-label="Sections">
+  <svg aria-hidden="true" data-river-svg></svg>
+  <ul class="visually-hidden">
+    {stops.map((s) => <li><a href={`#${s.id}`}>{s.label}</a></li>)}
+  </ul>
+</nav>
+
+<style>
+  .river {
+    position: fixed; left: 0; top: 0; bottom: 0; width: 120px; z-index: 20;
+    opacity: 0; pointer-events: none; transition: opacity 0.6s var(--ease);
+  }
+  .river:global(.show) { opacity: 1; pointer-events: auto; }
+  svg { width: 100%; height: 100%; overflow: visible; }
+  .river :global(.isle) { cursor: pointer; }
+  .river :global(.isle .blob) { fill: var(--paper); stroke: var(--ink); stroke-width: 1.4; transition: fill 0.5s; }
+  .river :global(.isle.here .blob) { fill: var(--c); }
+  .river :global(.isle text) { font: 19px var(--hand); fill: var(--ink); }
+  .river :global(.isle:focus-visible) { outline: none; }
+  .river :global(.isle:focus-visible .blob) { stroke: var(--walnut); stroke-width: 2.5; }
+  @media (max-width: 760px) {
+    .river {
+      top: auto; width: auto; right: 0; height: 84px;
+      background: linear-gradient(transparent, var(--paper) 35%);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+  }
+</style>
+
+<script>
+  import { blob, seeded, smoothPath } from '../lib/blob';
+  import { stops } from '../data/voyage';
+
+  const NS = 'http://www.w3.org/2000/svg';
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const nav = document.querySelector<HTMLElement>('[data-river]')!;
+  const root = nav.querySelector<SVGSVGElement>('[data-river-svg]')!;
+  const hero = document.getElementById('hero');
+  const sections = stops.map((s) => document.getElementById(s.id)!);
+  const isleAt = [0.08, 0.36, 0.64, 0.9]; // where each stop sits along the river, 0–1
+
+  const svg = (tag: string, attrs: Record<string, string | number>, parent: Element) => {
+    const n = document.createElementNS(NS, tag);
+    for (const k in attrs) n.setAttribute(k, String(attrs[k]));
+    parent.appendChild(n);
+    return n;
+  };
+
+  let path: SVGPathElement, length = 0, boat: SVGGElement, isles: SVGGElement[] = [];
+
+  function draw() {
+    root.replaceChildren();
+    const horizontal = innerWidth <= 760;
+    const W = horizontal ? innerWidth : 120, H = horizontal ? 84 : innerHeight;
+    root.setAttribute('viewBox', `0 0 ${W} ${H}`);
+
+    // Sine meander plus noise, so it never looks ruled or symmetrical.
+    const rnd = seeded(42), span = horizontal ? W : H, amp = horizontal ? 14 : 26, n = 9;
+    const pts: [number, number][] = [];
+    for (let i = 0; i <= n; i++) {
+      const t = i / n, along = 30 + t * (span - 60);
+      const lateral = Math.sin(t * Math.PI * 2.6 + 0.6) * amp + (rnd() - 0.5) * amp * 0.9;
+      pts.push(horizontal ? [along, 40 + lateral * 0.7] : [55 + lateral, along]);
+    }
+    const d = smoothPath(pts);
+    svg('path', { d, fill: 'none', stroke: '#9DB3B5', 'stroke-width': horizontal ? 12 : 16, 'stroke-linecap': 'round', opacity: 0.55, filter: 'url(#wc)' }, root);
+    path = svg('path', { d, fill: 'none', stroke: '#2B2A26', 'stroke-width': 1.2, 'stroke-dasharray': '2 6', 'stroke-linecap': 'round', opacity: 0.6 }, root) as SVGPathElement;
+    length = path.getTotalLength();
+
+    isles = stops.map((stop, i) => {
+      const p = path.getPointAtLength(isleAt[i] * length);
+      const side = i % 2 ? 1 : -1;
+      const big = 'big' in stop && stop.big;
+      const g = svg('g', { class: 'isle', tabindex: 0, role: 'link', 'aria-label': stop.label, style: `--c:${stop.colour}` }, root) as SVGGElement;
+      const r = (big ? 15 : 11) * (horizontal ? 0.8 : 1);
+      const x = horizontal ? p.x : p.x + side * 22, y = horizontal ? p.y + side * 18 : p.y;
+      svg('path', { class: 'blob', d: blob(x, y, r, 0.3, 8, 100 + i * 7), filter: 'url(#wobble)' }, g);
+      if (big && !horizontal) {
+        [[-16, -18], [18, -14], [-14, 20]].forEach(([dx, dy], k) =>
+          svg('path', { class: 'blob', d: blob(x + dx, y + dy, 5, 0.3, 7, 300 + k), filter: 'url(#wobble)' }, g));
+      }
+      const label = svg('text', horizontal
+        ? { x, y: y + (side > 0 ? 26 : -16), 'text-anchor': 'middle' }
+        : { x: Math.max(x, p.x) + r * 1.3 + 8, y: y + 5, 'text-anchor': 'start' }, g); // labels always right, so none clip at the edge
+      label.textContent = stop.label;
+      const go = () => sections[i].scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+      g.addEventListener('click', go);
+      g.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+      return g;
+    });
+
+    boat = svg('g', {}, root) as SVGGElement;
+    const b = svg('g', { transform: 'translate(-14 -14)' }, boat);
+    svg('path', { d: 'M2 16 Q14 14 26 16 Q23 24 14 24 Q5 24 2 16Z', fill: '#8C6446', stroke: '#2B2A26', 'stroke-width': 1.2 }, b);
+    svg('circle', { cx: 14, cy: 7, r: 4, fill: '#E9C9A9', stroke: '#2B2A26', 'stroke-width': 1 }, b);
+    svg('path', { d: 'M10 16 q 4 -8 8 0', fill: '#E8873A' }, b);
+  }
+
+  // Map scroll position to a point on the river, interpolating between islands.
+  let boatAt = 0, target = 0;
+  function track() {
+    const mid = scrollY + innerHeight * 0.45;
+    const tops = sections.map((s) => s.offsetTop);
+    let i = 0;
+    while (i < tops.length - 1 && mid >= tops[i + 1]) i++;
+    const end = i < tops.length - 1 ? tops[i + 1] : tops[i] + sections[i].offsetHeight;
+    const f = Math.max(0, Math.min(1, (mid - tops[i]) / (end - tops[i])));
+    const from = isleAt[i], to = i < isleAt.length - 1 ? isleAt[i + 1] : 0.98;
+    target = mid < tops[0] ? isleAt[0] : from + (to - from) * f;
+    isles.forEach((g, k) => g.classList.toggle('here', k === i && mid >= tops[0]));
+    nav.classList.toggle('show', scrollY > (hero ? hero.offsetHeight * 0.7 : 0));
+  }
+
+  function frame(now: number) {
+    boatAt += (target - boatAt) * (reduce ? 1 : 0.08);
+    const p = path.getPointAtLength(boatAt * length);
+    const bob = reduce ? 0 : Math.sin((now / 1000) * 2.4) * 1.2;
+    boat.setAttribute('transform', `translate(${p.x.toFixed(1)} ${(p.y + bob).toFixed(1)})`);
+    requestAnimationFrame(frame);
+  }
+
+  draw();
+  track();
+  addEventListener('scroll', track, { passive: true });
+  addEventListener('resize', () => { draw(); track(); });
+  requestAnimationFrame(frame);
+</script>

@@ -1,8 +1,6 @@
 ---
-layout: page
 title: SeedBot 🌱
 permalink: /projects/seedbot/
-order: 6
 ---
 
 ## The Problem

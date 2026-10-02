@@ -1,0 +1,40 @@
+---
+// Long-form project pages, served at their original URLs.
+import { getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import '../styles/prose.css';
+
+export async function getStaticPaths() {
+  const pages = await getCollection('pages');
+  return pages.map((page) => ({
+    params: { path: page.data.permalink.replace(/^\/|\/$/g, '') },
+    props: { page },
+  }));
+}
+
+const { page } = Astro.props;
+const { Content } = await render(page);
+const title = page.data.title.replace(/\p{Extended_Pictographic}/gu, '').trim();
+---
+<Base title={title}>
+  <header class="bar">
+    <a href="/#work" class="home"><span aria-hidden="true">←</span> back to the voyage</a>
+  </header>
+  <main>
+    <span class="hand eyebrow">docked at</span>
+    <h1>{title}</h1>
+    <article class="prose">
+      <Content />
+    </article>
+  </main>
+</Base>
+
+<style>
+  .bar, main { padding-inline: var(--gutter); max-width: 880px; margin-inline: auto; }
+  .bar { padding-block: 28px; }
+  .home { font: 20px var(--hand); color: var(--walnut); text-decoration: none; }
+  .home:hover span { display: inline-block; transform: translateX(-3px); transition: transform 0.3s var(--ease); }
+  main { padding-block: 32px 120px; }
+  .eyebrow { font-size: 20px; }
+  h1 { font-size: clamp(40px, 7vw, 72px); line-height: 1; margin-bottom: 24px; }
+</style>
