@@ -22,7 +22,14 @@ const fullTitle = title ? `${title} · Jesslyn Devina` : 'Jesslyn Devina';
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
-    <link rel="icon" href="/assets/img/favicon/favicon-32x32.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)} />
+    <meta property="og:image" content={new URL('/og.png', Astro.site)} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#E7E4DD" />
+    <link rel="icon" href="/assets/img/favicon/favicon.ico" sizes="any" />
+    <link rel="icon" href="/assets/img/favicon/favicon-32x32.png" type="image/png" sizes="32x32" />
+    <link rel="manifest" href="/assets/img/favicon/site.webmanifest" />
     <link rel="apple-touch-icon" href="/assets/img/favicon/apple-touch-icon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

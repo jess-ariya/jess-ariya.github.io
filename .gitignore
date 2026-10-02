@@ -33,3 +33,4 @@ assets/js/dist
 # Astro
 dist
 .astro
+public/_opt
