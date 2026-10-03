@@ -141,15 +141,79 @@ const bubbles = [
     })();
   }
 
-  // Three fish swimming lazy figure-eights; a click on the water scatters them.
-  const fish = ([[380, 520, 90, 26, 0.5], [760, 470, 120, 30, -0.4], [980, 600, 80, 20, 0.65]] as const).map(([cx, cy, rx, ry, speed], i) => {
-    const g = svg('g', {}, fishLayer);
-    const body = svg('g', { filter: 'url(#wc)' }, g);
-    svg('ellipse', { cx: 0, cy: 0, rx: 16, ry: 8, fill: '#E8873A' }, body);
-    svg('path', { d: 'M-14 0 L-26 -8 L-24 0 L-26 8 Z', fill: '#E8873A' }, body);
+  // Three fish that wander: each picks a spot in the water, turns towards it gradually,
+  // cruises or idles, and wags its tail faster the faster it swims.
+  const rand = (lo: number, hi: number) => lo + Math.random() * (hi - lo);
+  // The sea is drawn with "slice", so only part of the 1200×700 drawing is visible at narrow widths.
+  const water = { x0: 40, x1: 1160, y0: 480, y1: 670 }; // below the boat
+  function fitWater() {
+    const { width, height } = sea.getBoundingClientRect();
+    const scale = Math.max(width / 1200, height / 700);
+    const visible = width / scale;
+    water.x0 = (1200 - visible) / 2 + 40;
+    water.x1 = (1200 + visible) / 2 - 40;
+  }
+  fitWater();
+  addEventListener('resize', fitWater);
+
+  type Fish = {
+    g: SVGGElement; tail: SVGGElement;
+    x: number; y: number; heading: number; speed: number; cruise: number;
+    tx: number; ty: number; until: number; wag: number; flee: number; turn: number;
+  };
+  const pickTarget = (f: Fish, now: number) => {
+    f.tx = rand(water.x0, water.x1);
+    f.ty = rand(water.y0, water.y1);
+    const idle = Math.random() < 0.25;
+    f.cruise = idle ? rand(4, 10) : rand(28, 60);
+    f.until = now + (idle ? rand(1.2, 2.8) : rand(4, 9));
+  };
+  const fish: Fish[] = [[380, 520], [760, 470], [980, 600]].map(([x, y]) => {
+    const g = svg('g', {}, fishLayer) as SVGGElement;
+    const tail = svg('g', { filter: 'url(#wc)' }, g) as SVGGElement;
+    svg('path', { d: 'M-12 0 L-26 -8 L-23 0 L-26 8 Z', fill: '#E8873A' }, tail);
+    svg('ellipse', { cx: 0, cy: 0, rx: 16, ry: 8, fill: '#E8873A', filter: 'url(#wc)' }, g);
     svg('circle', { cx: 9, cy: -2, r: 1.6, fill: '#2B2A26' }, g);
-    return { g, cx, cy, rx, ry, speed, t: i * 2, ox: 0, oy: 0, vx: 0, vy: 0, px: cx, py: cy };
+    const f: Fish = { g, tail, x, y, heading: rand(-Math.PI, Math.PI), speed: 20, cruise: 30, tx: x, ty: y, until: 0, wag: rand(0, 6), flee: 0, turn: 1 };
+    pickTarget(f, 0);
+    return f;
   });
+
+  const wrap = (a: number) => Math.atan2(Math.sin(a), Math.cos(a));
+  function swim(f: Fish, t: number, dt: number) {
+    if (t > f.until || Math.hypot(f.tx - f.x, f.ty - f.y) < 30) pickTarget(f, t);
+    const fleeing = f.flee > t;
+    // Fish swim mostly level: cap the climb or dive at about 25°.
+    const level = 0.44;
+    let desired = Math.atan2(f.ty - f.y, f.tx - f.x);
+    const right = Math.cos(desired) >= 0;
+    const pitch = right ? desired : wrap(Math.PI - desired);
+    desired = Math.max(-level, Math.min(level, pitch));
+    if (!right) desired = wrap(Math.PI - desired);
+    const turnRate = fleeing ? 7 : 1.4; // radians per second
+    // Turning around is a quick flip (seen side-on), never a swing through vertical.
+    if (Math.cos(desired) * Math.cos(f.heading) < 0) {
+      f.heading = wrap(Math.PI - f.heading);
+      f.turn = 0;
+    }
+    f.turn = Math.min(1, f.turn + dt * (fleeing ? 10 : 4));
+    const delta = wrap(desired - f.heading);
+    f.heading += Math.sign(delta) * Math.min(Math.abs(delta), turnRate * dt) + Math.sin(t * 1.3 + f.wag) * 0.004;
+    const goal = fleeing ? 200 : f.cruise;
+    f.speed += (goal - f.speed) * Math.min(1, dt * (fleeing ? 6 : 1.2));
+    f.x += Math.cos(f.heading) * f.speed * dt;
+    f.y += Math.sin(f.heading) * f.speed * dt;
+    f.x = Math.min(water.x1 + 60, Math.max(water.x0 - 60, f.x));
+    f.y = Math.min(water.y1 + 30, Math.max(water.y0 - 30, f.y));
+
+    f.wag += dt * (5 + f.speed * 0.1);
+    const swing = Math.sin(f.wag) * Math.min(28, 8 + f.speed * 0.15);
+    f.tail.setAttribute('transform', `rotate(${swing.toFixed(1)} -12 0)`);
+    const deg = (f.heading * 180) / Math.PI;
+    const squash = (0.25 + 0.75 * f.turn).toFixed(2); // narrows mid-turn
+    const flip = Math.cos(f.heading) < 0 ? ` scale(${squash} -1)` : ` scale(${squash} 1)`; // eye stays on top
+    f.g.setAttribute('transform', `translate(${f.x.toFixed(1)} ${f.y.toFixed(1)}) rotate(${deg.toFixed(1)})${flip}`);
+  }
 
   hero.addEventListener('click', (e) => {
     const pt = sea.createSVGPoint();
@@ -167,28 +231,28 @@ const bubbles = [
       requestAnimationFrame(grow);
     };
     requestAnimationFrame(grow);
+    const t = performance.now() / 1000;
     for (const f of fish) {
-      const dx = f.px - p.x, dy = f.py - p.y, d = Math.hypot(dx, dy) || 1;
-      if (d < 380) { f.vx += (dx / d) * 9; f.vy += (dy / d) * 4; }
+      const dx = f.x - p.x, dy = f.y - p.y, d = Math.hypot(dx, dy) || 1;
+      if (d > 380) continue;
+      // Dart away from the ripple, then settle back into wandering.
+      f.tx = f.x + (dx / d) * 260;
+      f.ty = Math.min(water.y1, Math.max(water.y0, f.y + (dy / d) * 120));
+      f.flee = t + 0.7;
+      f.until = t + 1.6;
     }
   });
 
+  let last = performance.now();
   function frame(now: number) {
     const s = reduce ? 0 : now / 1000;
+    const dt = Math.min(0.05, (now - last) / 1000);
+    last = now;
     // Scrolling through the hero rows the boat off to the right, towards the river.
     const progress = Math.min(1, scrollY / hero.offsetHeight);
     bubbleStack.classList.toggle('gone', scrollY > 24); // the chat clears once you start rowing
     vessel.style.transform = `translate(${progress * innerWidth * 0.7}px, ${Math.sin(s * 1.6) * 4}px) rotate(${Math.sin(s * 1.6 + 0.8) * 1.4}deg)`;
-    for (const f of fish) {
-      if (!reduce) f.t += 0.012 * f.speed;
-      f.ox += f.vx; f.oy += f.vy;
-      f.vx *= 0.93; f.vy *= 0.93; f.ox *= 0.985; f.oy *= 0.985;
-      const x = f.cx + Math.cos(f.t) * f.rx + f.ox;
-      const y = f.cy + Math.sin(f.t * 2) * f.ry * 0.5 + f.oy;
-      const angle = (Math.atan2(y - f.py, x - f.px) * 180) / Math.PI;
-      f.px = x; f.py = y;
-      f.g.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${angle.toFixed(1)})`);
-    }
+    for (const f of fish) swim(f, now / 1000, reduce ? 0 : dt);
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
