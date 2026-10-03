@@ -34,10 +34,6 @@ const bubbles = [
       <p class="bubble typing" hidden aria-hidden="true"><span></span><span></span><span></span></p>
     </div>
     <svg viewBox="0 0 260 170" aria-hidden="true">
-      <g data-oar="back" style="transform-origin:150px 96px">
-        <path d="M150 96 L 228 150" stroke="#6B4A33" stroke-width="5" stroke-linecap="round" />
-        <ellipse cx="232" cy="153" rx="14" ry="6" fill="#6B4A33" transform="rotate(35 232 153)" />
-      </g>
       <g filter="url(#wc)">
         <ellipse cx="128" cy="72" rx="20" ry="24" fill="#E8873A" />
         <path d="M108 70 q 20 -20 40 0 l 0 30 l -40 0 z" fill="#E8873A" />
@@ -48,10 +44,6 @@ const bubbles = [
       <g filter="url(#wc)"><path d="M30 98 Q 130 92 230 98 Q 214 140 130 142 Q 50 140 30 98 Z" fill="#8C6446" /></g>
       <path d="M30 98 Q 130 92 230 98 Q 214 140 130 142 Q 50 140 30 98 Z" fill="none" stroke="#2B2A26" stroke-width="1.6" />
       <path d="M44 112 Q 130 118 218 112" fill="none" stroke="#2B2A26" stroke-width="1" opacity=".5" />
-      <g data-oar="front" style="transform-origin:120px 98px">
-        <path d="M120 98 L 40 152" stroke="#6B4A33" stroke-width="5" stroke-linecap="round" />
-        <ellipse cx="34" cy="156" rx="14" ry="6" fill="#6B4A33" transform="rotate(-35 34 156)" />
-      </g>
     </svg>
   </div>
   <div class="rock" aria-label="Signpost on a rock: Vancouver, Canada" role="img">
@@ -69,7 +61,7 @@ const bubbles = [
       <path d="M24 152 q 20 -6 40 0 M 140 152 q 22 -6 44 0" fill="none" stroke="#F1EFE9" stroke-width="2" stroke-linecap="round" />
     </svg>
   </div>
-  <p class="cue" aria-hidden="true">scroll to row along <span>→</span></p>
+  <p class="cue" aria-hidden="true">scroll to row along <span>↓</span></p>
 </section>
 
 <style>
@@ -100,7 +92,7 @@ const bubbles = [
   .sign { font: 18px var(--hand); fill: var(--ink); }
   .cue { position: absolute; right: var(--gutter); bottom: 24px; font: 20px var(--hand); color: var(--walnut); z-index: 3; pointer-events: none; }
   .cue span { display: inline-block; animation: nudge 2.4s ease-in-out infinite; }
-  @keyframes nudge { 50% { transform: translateX(6px); } }
+  @keyframes nudge { 50% { transform: translateY(5px); } }
   @media (max-width: 560px) {
     .vessel { left: 4%; top: 64%; }
     .bubbles { left: 46%; bottom: 102%; }
@@ -115,8 +107,6 @@ const bubbles = [
   const hero = document.getElementById('hero')!;
   const sea = document.getElementById('sea') as unknown as SVGSVGElement;
   const vessel = hero.querySelector<HTMLElement>('[data-vessel]')!;
-  const oarFront = hero.querySelector<SVGGElement>('[data-oar="front"]')!;
-  const oarBack = hero.querySelector<SVGGElement>('[data-oar="back"]')!;
   const bubbleStack = hero.querySelector<HTMLElement>('.bubbles')!;
   const fishLayer = hero.querySelector('[data-fish]')!;
   const rippleLayer = hero.querySelector('[data-ripples]')!;
@@ -189,9 +179,6 @@ const bubbles = [
     const progress = Math.min(1, scrollY / hero.offsetHeight);
     bubbleStack.classList.toggle('gone', scrollY > 24); // the chat clears once you start rowing
     vessel.style.transform = `translate(${progress * innerWidth * 0.7}px, ${Math.sin(s * 1.6) * 4}px) rotate(${Math.sin(s * 1.6 + 0.8) * 1.4}deg)`;
-    const stroke = Math.sin(s * 2.2) * 14;
-    oarFront.style.transform = `rotate(${stroke}deg)`;
-    oarBack.style.transform = `rotate(${-stroke}deg)`;
     for (const f of fish) {
       if (!reduce) f.t += 0.012 * f.speed;
       f.ox += f.vx; f.oy += f.vy;
