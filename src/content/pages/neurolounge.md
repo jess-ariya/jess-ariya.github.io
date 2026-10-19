@@ -90,14 +90,16 @@ At this stage the whole admin side lived in GHL. I set up custom objects for ord
 
 Behind those two buttons sit two Cloudflare Workers. They are the only part of the system allowed to talk to GHL.
 
-<ol class="flow">
-  <li><b>Potential</b><span>customer saves a quote</span></li>
-  <li><b>Quote Requested</b><span>customer books a call</span></li>
-  <li><b>Call Completed</b><span>staff mark the call done</span></li>
-  <li><b>Quoted</b><span>staff finalize</span></li>
-  <li><b>Invoiced</b><span>invoice sent</span></li>
-  <li><b>Paid</b><span>deal won and closed</span></li>
+<ol class="flow" aria-label="Sales pipeline stages">
+  <li data-by="customer"><b>Potential</b><span>customer saves a quote</span></li>
+  <li data-by="customer"><b>Quote Requested</b><span>customer books a call</span></li>
+  <li data-by="staff"><b>Call Completed</b><span>staff mark the call done</span></li>
+  <li data-by="staff"><b>Quoted</b><span>staff finalize</span></li>
+  <li data-by="auto"><b>Invoiced</b><span>moves when the invoice is sent</span></li>
+  <li data-by="auto"><b>Paid</b><span>deal won and closed</span></li>
 </ol>
+<div class="flow-lock" aria-hidden="true"><span>locked for the customer</span></div>
+<p class="flow-key"><span><i class="customer"></i>customer</span><span><i class="staff"></i>staff</span><span><i class="auto"></i>automatic</span></p>
 <p class="image-caption">Six sales stages, each with exactly one way in</p>
 
 Four rules keep the records honest:
