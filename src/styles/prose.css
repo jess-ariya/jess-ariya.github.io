@@ -85,3 +85,15 @@
 .image-item--phone img { max-height: 420px; width: auto; margin-inline: auto; display: block; }
 .image-row:has(.image-item--phone) { grid-template-columns: 2fr 1fr; align-items: start; }
 @media (max-width: 640px) { .image-row:has(.image-item--phone) { grid-template-columns: 1fr; } }
+
+/* Build phases as a numbered row of cards. */
+.prose .phases { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; counter-reset: phase; }
+.prose .phases li {
+  display: grid; gap: 4px; align-content: start; padding: 14px 16px 16px; counter-increment: phase;
+  background: var(--paper-light); border-radius: 18px 14px 20px 14px;
+  box-shadow: inset 0 4px 0 color-mix(in srgb, var(--c) 70%, transparent);
+}
+.prose .phases li::before { content: 'phase ' counter(phase); font: 18px var(--hand); color: var(--walnut); }
+.prose .phases b { font-weight: 500; font-size: 16px; line-height: 1.25; }
+.prose .phases span { font-size: 14px; line-height: 1.4; color: var(--muted); }
+@media (max-width: 640px) { .prose .phases { grid-template-columns: repeat(2, 1fr); } }

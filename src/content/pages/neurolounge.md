@@ -8,7 +8,7 @@ role: "Design and full-stack build"
 stack: "React, TypeScript, Cloudflare Workers, D1, KV, GoHighLevel API"
 when: "Sep – Oct 2026"
 problem: "Buyers couldn't price a NeuroLounge themselves, and sales had no clean way from a configuration to a paid deal."
-process: "Built a four-step calculator, two Workers that own every CRM write, and a staff dashboard around one state machine."
+process: "Built in phases: the calculator first with GHL as the back office, then a two-way synced admin dashboard, invoicing and catalog editing."
 outcome: "A live quote-to-cash system: customers price and book, staff prep, finalize and invoice, all synced to GoHighLevel."
 ---
 
@@ -41,9 +41,20 @@ Three groups touch every deal, and each needed something different:
 
 One constraint shaped everything: **GHL stays the source of truth.** Reps also move deals there by hand. My system had to keep GHL correct when a customer saves five times, staff edit the quote afterwards, and someone drags a card in the CRM.
 
-## The Calculator
+## How I Built It
 
-I kept the customer side to four steps: how you buy, technology, ancillary services, review. The price card stays pinned on the right and updates with every click, and the stepper fills in as you go so you always know what is left.
+I built it iteratively: one fundamental need at a time, and a new feature only once the thing under it worked well. That gave the project four phases.
+
+<ol class="phases">
+  <li><b>The calculator</b><span>Customer-facing first. Sales ran entirely in GHL.</span></li>
+  <li><b>An admin platform</b><span>A dashboard with two-way GHL sync, so staff stop fighting the CRM.</span></li>
+  <li><b>Invoices and automatic stages</b><span>Send the invoice, and the deal moves itself.</span></li>
+  <li><b>Catalog editing and the extras</b><span>Admins change prices themselves. Timelines and notes.</span></li>
+</ol>
+
+## Phase 1: The Calculator
+
+The first thing I built was the part customers see. I kept it to four steps: how you buy, technology, ancillary services, review. The price card stays pinned on the right and updates with every click, and the stepper fills in as you go so you always know what is left.
 
 <div class="image-row">
   <div class="image-item image-item--framed">
@@ -73,14 +84,16 @@ The catalogue is long (36 pieces of technology before any services), so I groupe
 
 Everything autosaves to the browser, so a refresh never loses a half-built lounge. Two buttons send it further: **Print or save quote** and **Schedule launch call**.
 
-## What Happens When You Press Save
+At this stage the whole admin side lived in GHL. I set up custom objects for orders and their line items, linked them to contacts and opportunities, and arranged the sales pipeline there. Every saved quote also got a recall link, so a customer could come back and change it, and staff could open the same link to make edits for them.
+
+### What happens when you press save
 
 Behind those two buttons sit two Cloudflare Workers. They are the only part of the system allowed to talk to GHL.
 
 <ol class="flow">
   <li><b>Potential</b><span>customer saves a quote</span></li>
   <li><b>Quote Requested</b><span>customer books a call</span></li>
-  <li><b>Call Completed</b><span>staff, on the dashboard</span></li>
+  <li><b>Call Completed</b><span>staff mark the call done</span></li>
   <li><b>Quoted</b><span>staff finalize</span></li>
   <li><b>Invoiced</b><span>invoice sent</span></li>
   <li><b>Paid</b><span>deal won and closed</span></li>
@@ -92,20 +105,33 @@ Four rules keep the records honest:
 1. **The browser never sends prices.** It sends item ids and quantities. The Worker prices them from the shared catalogue, so what lands in GHL always matches what the customer saw, and nobody can edit a total in dev tools.
 2. **The quote number is the key.** A small KV store maps each quote number to the GHL records it created. Save five times and you update one order, not five.
 3. **Stages only move forward.** A customer save never drags a deal backwards, even if a rep already moved it on in GHL. The one designed exception is *Unfinalize*, which staff can use until the invoice goes out.
-4. **Links are signed.** Each saved quote gets a recall link that works for 90 days and renews on every save. Knowing a quote number opens nothing.
+4. **Links are signed.** Each recall link works for 90 days and renews on every save. Knowing a quote number opens nothing.
 
 Once staff finalize a quote it locks: a customer save gets refused, and their link turns view-only. That one rule removed a whole class of "which version did they agree to?" problems.
 
-## The Admin Dashboard
+## Phase 2: A Better Admin Platform
 
-The staff side lives behind Cloudflare Access, so the team signs in with a one-time code to their work email and there are no passwords for me to store. It reads its own database for history and call notes, and asks the Workers for anything that touches GHL.
+With the calculator working and quotes coming in, the friction moved to the sales team. Seeing which stage each deal was in, filtering customers, and switching over to customer-journey tracking all took too many clicks in GHL. So I built them a dashboard of their own, with two-way sync to GHL: a change made in either place shows up in the other.
+
+The dashboard sits behind Cloudflare Access, so the team signs in with a one-time code to their work email and there are no passwords for me to store.
 
 <div class="project-hero-image">
   <img src="/assets/img/projects/neurolounge/a1-overview.png" alt="Admin overview: funnel, calls completed and the next call to prepare">
   <p><em>Overview: the funnel from saved configuration to completed call</em></p>
 </div>
 
-Most of the design work went into the moments around the launch call. The calls page puts the next call first, with the customer's quote, who is taking it and space for prep notes, so nobody walks into a call cold.
+<div class="image-row">
+  <div class="image-item image-item--framed">
+    <img src="/assets/img/projects/neurolounge/a9-board.png" alt="People board grouped by sales stage">
+    <p><em>People: every deal by stage, with filters and a table view</em></p>
+  </div>
+  <div class="image-item image-item--framed">
+    <img src="/assets/img/projects/neurolounge/a5-journey.png" alt="Customer journey board from onboarded to 90 days">
+    <p><em>Journey: paying customers from onboarded to 90 days</em></p>
+  </div>
+</div>
+
+The biggest change was editing quotes in place. Before, staff edited through the recall link, which opened the calculator on another page. Now they revise a quote directly in the dashboard and send the customer the updated version from there. The calls page puts the next launch call first, with the quote, who is taking it and prep notes, so nobody walks into a call cold.
 
 <div class="image-row">
   <div class="image-item image-item--framed">
@@ -113,23 +139,32 @@ Most of the design work went into the moments around the launch call. The calls 
     <p><em>Calls: prep notes and who's taking it</em></p>
   </div>
   <div class="image-item image-item--framed">
-    <img src="/assets/img/projects/neurolounge/a8-quote-pricing.png" alt="Quote detail with the agreed price and invoice plan">
-    <p><em>Quotes: the agreed price, exactly as GHL will invoice it</em></p>
+    <img src="/assets/img/projects/neurolounge/a7-quote-locked.png" alt="A finalized quote with its stage tracker">
+    <p><em>Quotes: edit, finalize and resend without leaving the page</em></p>
   </div>
 </div>
 
-After the call, staff revise the quote, finalize it and create the invoice from the same page. The stage tracker across the top mirrors the sales pipeline, and the price panel spells out what's due at signing and each month after.
+## Phase 3: Invoices That Move the Deal
 
-<div class="image-row">
-  <div class="image-item image-item--framed">
-    <img src="/assets/img/projects/neurolounge/a9-board.png" alt="People board grouped by sales stage">
-    <p><em>People: every deal as a board, with quote value per stage</em></p>
-  </div>
-  <div class="image-item image-item--framed">
-    <img src="/assets/img/projects/neurolounge/a5-journey.png" alt="Customer journey board from onboarded to 90 days">
-    <p><em>Journey: paying customers from onboarded to 90 days</em></p>
-  </div>
+Next came creating invoices and sending them out from the quote page. The price panel spells out what's due at signing and each month after, matching exactly what GHL will bill.
+
+<div class="project-hero-image">
+  <img src="/assets/img/projects/neurolounge/a8-quote-pricing.png" alt="Quote detail with the agreed price and the invoice plan">
+  <p><em>The agreed price, and the invoices GHL will send</em></p>
 </div>
+
+Stages now move on their own. Send the invoice and the deal moves to Invoiced, in both the dashboard and GHL. Nobody has to remember to drag a card.
+
+## Phase 4: Handing Over the Catalog
+
+Prices live in the Cloudflare database the Workers read from, so every price change used to be a message to me. I added a catalog editor so admins can add items, change prices and reorganise categories themselves. Changes collect in a shared draft until someone publishes them, and quotes that already exist keep their prices.
+
+<div class="project-hero-image">
+  <img src="/assets/img/projects/neurolounge/a10-catalog.png" alt="Catalog editor with categories, items and prices">
+  <p><em>Catalog: what the calculator offers and what it charges, now editable by admins</em></p>
+</div>
+
+Smaller additions grew on top: a timeline of everything that happened on each deal, and notes that sync back to the contact in GHL.
 
 ## When Things Break
 
