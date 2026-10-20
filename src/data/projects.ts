@@ -12,11 +12,12 @@ export interface Project {
 }
 
 export const projects: Project[] = [
-  { name: 'Orange Garden', href: '/projects/orangeTree/', blurb: 'A task app that grows fruit as you finish things', tags: 'React · Firebase', colour: '#E8873A', at: [100, 170], image: 'orange-garden.png' },
-  { name: 'SeedBot', href: '/projects/seedbot/', blurb: 'An automated seed-scanning test bench, built with Insporos', tags: 'capstone · automation', colour: '#7E9C57', at: [255, 95], image: 'seedbot.png' },
-  { name: 'TraffiBot', href: '/projects/traffibot/', blurb: 'An autonomous ROS robot that drives and reads licence plates', tags: 'ROS · ML', colour: '#9DB3B5', at: [410, 195], image: 'traffibot.png' },
-  { name: 'Walnut', href: '/projects/walnut/', blurb: 'Lecture notes that transcribe and translate as you listen', tags: 'product · AI', colour: '#8C6446', at: [565, 105], image: 'walnut.jpg' },
-  { name: 'Pototo', href: '/projects/pototo/', blurb: 'A to-do list for brains that resist starting', tags: 'product research', colour: '#D9B36C', at: [720, 180], image: 'pototo.png' },
+  { name: 'NeuroLounge', href: '/projects/neurolounge/', blurb: 'A pricing calculator and sales dashboard, from first click to paid invoice', tags: 'full-stack · Cloudflare', colour: '#4F6FA5', at: [80, 175], image: 'neurolounge.png' },
+  { name: 'Orange Garden', href: '/projects/orangeTree/', blurb: 'A task app that grows fruit as you finish things', tags: 'React · Firebase', colour: '#E8873A', at: [215, 95], image: 'orange-garden.png' },
+  { name: 'SeedBot', href: '/projects/seedbot/', blurb: 'An automated seed-scanning test bench, built with Insporos', tags: 'capstone · automation', colour: '#7E9C57', at: [350, 190], image: 'seedbot.png' },
+  { name: 'TraffiBot', href: '/projects/traffibot/', blurb: 'An autonomous ROS robot that drives and reads licence plates', tags: 'ROS · ML', colour: '#9DB3B5', at: [485, 100], image: 'traffibot.png' },
+  { name: 'Walnut', href: '/projects/walnut/', blurb: 'Lecture notes that transcribe and translate as you listen', tags: 'product · AI', colour: '#8C6446', at: [620, 185], image: 'walnut.jpg' },
+  { name: 'Pototo', href: '/projects/pototo/', blurb: 'A to-do list for brains that resist starting', tags: 'product research', colour: '#D9B36C', at: [745, 105], image: 'pototo.png' },
 ];
 
 // Smaller voyages, linked from Play.

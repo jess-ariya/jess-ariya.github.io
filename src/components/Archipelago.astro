@@ -1,5 +1,5 @@
 ---
-// Five project islets strung along a dotted route. Hovering one paints it in and floats up a preview.
+// Six project islets strung along a dotted route. Hovering one paints it in and floats up a preview.
 // Phones get a plain list instead.
 import { Image } from 'astro:assets';
 import { blob } from '../lib/blob';
@@ -63,7 +63,8 @@ const R = 56; // islet radius: wide enough that the longest name sits inside the
   .arch:has(.islet[data-i='1']:is(:hover, :focus-visible)) .tip[data-i='1'],
   .arch:has(.islet[data-i='2']:is(:hover, :focus-visible)) .tip[data-i='2'],
   .arch:has(.islet[data-i='3']:is(:hover, :focus-visible)) .tip[data-i='3'],
-  .arch:has(.islet[data-i='4']:is(:hover, :focus-visible)) .tip[data-i='4'] {
+  .arch:has(.islet[data-i='4']:is(:hover, :focus-visible)) .tip[data-i='4'],
+  .arch:has(.islet[data-i='5']:is(:hover, :focus-visible)) .tip[data-i='5'] {
     opacity: 1; transform: translate(-50%, calc(-100% - 56px)) rotate(var(--tilt));
   }
 
